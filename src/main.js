@@ -5,6 +5,7 @@ import App from './App'
 import router from './router'
 import axios from 'axios'
 import VueResource from 'vue-resource'
+
 Vue.prototype.$axios = axios
 axios.defaults.headers.common['token'] = 'f4c902c9ae5a2a9d8f84868ad064e706'
 axios.defaults.headers.post['Content-type'] = 'application/json;charset=UTF-8'
@@ -20,5 +21,5 @@ new Vue({
   el: '#app',
   router,
   template: '<App/>',
-  components: { App }
+  components: {App}
 })

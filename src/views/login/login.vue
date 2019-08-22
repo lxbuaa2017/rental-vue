@@ -3,8 +3,8 @@
     <div class="login-wrap" v-show="showLogin">
       <h3>登录</h3>
       <p v-show="showTishi">{{tishi}}</p>
-      <input type="text" placeholder="请输入用户名" v-model="username">
-      <input type="password" placeholder="请输入密码" v-model="password">
+      <input type="text" placeholder="请输入用户名" v-model="username"/>
+      <input type="password" placeholder="请输入密码" v-model="password"/>
       <button v-on:click="login">登录</button>
       <span v-on:click="ToRegister">没有账号？马上注册</span>
     </div>
@@ -12,8 +12,17 @@
     <div class="register-wrap" v-show="showRegister">
       <h3>注册</h3>
       <p v-show="showTishi">{{tishi}}</p>
-      <input type="text" placeholder="请输入用户名" v-model="newUsername">
-      <input type="password" placeholder="请输入密码" v-model="newPassword">
+      <input type="text" placeholder="用户名" v-model="newUsername"/>
+      <input type="password" placeholder="密码" v-model="newPassword"/>
+      <input type="text" placeholder="手机号码" v-model="phone"/>
+      <input type="email" placeholder="电子邮箱" v-model="email"/>
+      <div id="optionbox">
+        <input type="radio" id="one" value="true" v-model="isMale"/>
+        <label for="one">男</label>
+        <input type="radio" id="two" value="false" v-model="isMale"/>
+        <label for="two">女</label>
+      </div>
+      <input type="number" min="0" max="150" placeholder="年龄" v-model="age"/>
       <button v-on:click="register">注册</button>
       <span v-on:click="ToLogin">已有账号？马上登录</span>
     </div>
@@ -21,21 +30,66 @@
 </template>
 
 <style>
-  .login-wrap{text-align:center;}
-  input{display:block; width:250px; height:40px; line-height:40px;
+  #optionbox {
+    width: 250px;
+    display: flex;
+    justify-content: space-around;
+    margin: 0 auto;
+    align-content: flex-start;
+  }
+
+  #one, #two {
+    width: 20px;
+    height: 20px;
+    text-align: left;
+    margin-left: 10px;
+    margin-right: 0;
+  }
+
+  .login-wrap {
+    text-align: center;
+  }
+
+  input {
+    display: block;
+    width: 250px;
+    height: 40px;
+    line-height: 40px;
     margin: 0 auto 10px;
-    outline:none; border:1px solid #888; padding:10px; box-sizing:border-box;}
-  p{color:red;}
-  button{display:block; width:250px; height:40px; line-height: 40px;
-    border:none; background-color:#41b883; color:#fff; font-size:16px;
+    outline: none;
+    border: 1px solid #888;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  p {
+    color: red;
+  }
+
+  button {
+    display: block;
+    width: 250px;
+    height: 40px;
+    line-height: 40px;
+    border: none;
+    background-color: #41b883;
+    color: #fff;
+    font-size: 16px;
     margin: 0 auto 5px;
   }
-  span{cursor:pointer;}
-  span:hover{color:#41b883;}
+
+  span {
+    cursor: pointer;
+  }
+
+  span:hover {
+    color: #41b883;
+  }
 </style>
 
 <script>
-import { setCookie, getCookie } from '../../assets/js/cookie.js'
+import {setCookie, getCookie} from '../../assets/js/cookie.js'
+
 export default {
   data () {
     return {
@@ -43,7 +97,11 @@ export default {
       password: '',
       newUsername: '',
       newPassword: '',
-      tishi: '哈哈哈哈哈哈',
+      phone: '',
+      email: '',
+      isMale: 'true',
+      age: '',
+      tishi: '',
       showTishi: false,
       showLogin: true,
       showRegister: false
@@ -57,7 +115,7 @@ export default {
   methods: {
     login () {
       if (this.username === '' || this.password === '') {
-        alert('请输入用户名或密码!!')
+        alert('请输入用户名或密码！')
       } else {
         let data = {'username': this.username, 'password': this.password}
 
@@ -95,8 +153,13 @@ export default {
       if (this.newUsername === '' || this.newPassword === '') {
         alert('请输入用户名或密码')
       } else {
-        let data = {'username': this.newUsername, 'password': this.newPassword}
-        this.$http.post('http://localhost/vueapi/index.php/Home/user/register', data).then((res) => {
+        let data = {'username': this.newUsername,
+          'password': this.newPassword,
+          'phone': this.phone,
+          'email': this.email,
+          'isMale': this.isMale,
+          'age': this.age}
+        this.$http.post('http://localhost:8081/register', data).then((res) => {
           console.log(res)
           if (res.data === 'ok') {
             this.tishi = '注册成功'

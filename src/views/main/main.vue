@@ -10,8 +10,13 @@
 </template>
 
 <style>
-  ul{padding: 0;}
-  ul li{list-style: none;}
+  ul {
+    padding: 0;
+  }
+
+  ul li {
+    list-style: none;
+  }
 </style>
 
 <script>

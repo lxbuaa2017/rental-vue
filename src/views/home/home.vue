@@ -6,8 +6,9 @@
 </template>
 
 <script>
-import { getCookie, delCookie } from '../../assets/js/cookie.js'
-export default{
+import {getCookie, delCookie} from '../../assets/js/cookie.js'
+
+export default {
   data () {
     return {
       name: ''
