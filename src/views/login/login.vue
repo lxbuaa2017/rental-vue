@@ -1,5 +1,6 @@
 <template>
   <div>
+    <img src="../../assets/logo.png">
     <div class="login-wrap" v-show="showLogin">
       <h3>登录</h3>
       <p v-show="showTishi">{{tishi}}</p>
@@ -14,6 +15,7 @@
       <p v-show="showTishi">{{tishi}}</p>
       <input type="text" placeholder="用户名" v-model="newUsername"/>
       <input type="password" placeholder="密码" v-model="newPassword"/>
+      <input type="password" placeholder="确认密码" v-model="confirmPassword"/>
       <input type="text" placeholder="手机号码" v-model="phone"/>
       <input type="email" placeholder="电子邮箱" v-model="email"/>
       <div id="optionbox">
@@ -97,6 +99,7 @@ export default {
       password: '',
       newUsername: '',
       newPassword: '',
+      confirmPassword: '',
       phone: '',
       email: '',
       isMale: 'true',
