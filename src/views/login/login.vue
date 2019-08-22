@@ -159,7 +159,7 @@ export default {
           'email': this.email,
           'isMale': this.isMale,
           'age': this.age}
-        this.$http.post('http://localhost:8081/register', data).then((res) => {
+        this.$axios.post('http://localhost:8081/register', data).then((res) => {
           console.log(res)
           if (res.data === 'ok') {
             this.tishi = '注册成功'
