@@ -121,18 +121,19 @@ export default {
   },
   methods: {
     login () {
-      if (this.username === '' || this.password === '') {
-        alert('请输入用户名或密码！')
+      if (this.username === '') {
+        this.tishi = '请输入用户名'
+        this.showTishi = true
+      } else if (this.password === '') {
+        this.tishi = '请输入密码'
+        this.showTishi = true
       } else {
         let data = {'username': this.username, 'password': this.password}
 
         this.$axios.post('http://localhost:8081/login', data).then((res) => {
           console.log(res)
-          if (res.data === -1) {
-            this.tishi = '该用户不存在'
-            this.showTishi = true
-          } else if (res.data === 0) {
-            this.tishi = '密码输入错误'
+          if (res.data === 0) {
+            this.tishi = '用户名或密码错误'
             this.showTishi = true
           } else if (res.data === 'admin') {
             this.$router.push('/main')
@@ -141,7 +142,7 @@ export default {
             this.showTishi = true
             setCookie('username', this.username, 1000 * 60)
             setTimeout(function () {
-              this.$router.push({path: 'home', query: {id: 1}})
+              this.$router.push('/home')
             }.bind(this), 1000)
           }
         })
