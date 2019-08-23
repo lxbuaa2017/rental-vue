@@ -133,7 +133,6 @@ export default {
           } else if (res.data === 'admin') {
             this.$router.push('/main')
           } else {
-            alert('登录成功!')
             this.tishi = '登录成功'
             this.showTishi = true
             setCookie('username', this.username, 1000 * 60)
