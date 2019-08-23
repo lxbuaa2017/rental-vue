@@ -23,6 +23,7 @@ export default {
   },
   mounted () {
     let uname = getCookie('username')
+    uname = 'test'
     this.name = uname
     if (uname === '') {
       this.$router.push('/')

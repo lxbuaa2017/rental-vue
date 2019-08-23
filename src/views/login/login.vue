@@ -145,16 +145,39 @@ export default {
       }
     },
     ToRegister () {
+      this.showTishi = false
       this.showRegister = true
       this.showLogin = false
     },
     ToLogin () {
+      this.showTishi = false
       this.showRegister = false
       this.showLogin = true
     },
     register () {
-      if (this.newUsername === '' || this.newPassword === '') {
-        alert('请输入用户名或密码')
+      var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      var rePhone = /^1([38][0-9]|4[579]|5[0-3,5-9]|6[6]|7[0135678]|9[89])\d{8}$/
+      if (this.newUsername === '') {
+        this.tishi = '请输入用户名'
+        this.showTishi = true
+      } else if (this.newPassword === '') {
+        this.tishi = '请输入密码'
+        this.showTishi = true
+      } else if (this.newPassword.length < 6) {
+        this.tishi = '密码长度必须为6位或以上'
+        this.showTishi = true
+      } else if (this.newPassword !== this.confirmPassword) {
+        this.tishi = '两次输入的密码不一致'
+        this.showTishi = true
+      } else if (!rePhone.test(this.phone)) {
+        this.tishi = '手机号无效'
+        this.showTishi = true
+      } else if (!re.test(this.email)) {
+        this.tishi = '邮箱无效'
+        this.showTishi = true
+      } else if (this.age < 0 || this.age > 150) {
+        this.tishi = '年龄无效'
+        this.showTishi = true
       } else {
         let data = {'username': this.newUsername,
           'password': this.newPassword,
@@ -164,7 +187,7 @@ export default {
           'age': this.age}
         this.$axios.post('http://localhost:8081/register', data).then((res) => {
           console.log(res)
-          if (res.data === 'ok') {
+          if (res.data === 1000) {
             this.tishi = '注册成功'
             this.showTishi = true
             this.username = ''
@@ -174,6 +197,9 @@ export default {
               this.showLogin = true
               this.showTishi = false
             }.bind(this), 1000)
+          } else if (res.data === 1028) {
+            this.tishi = '用户名已存在'
+            this.showTishi = true
           }
         })
       }
