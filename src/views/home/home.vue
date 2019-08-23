@@ -8,7 +8,9 @@
         <el-aside width="200px">
           <nav-menu/>
         </el-aside>
-        <el-main/>
+        <el-main>
+          <router-view/>
+        </el-main>
       </el-container>
     </el-container>
   </div>
@@ -27,13 +29,18 @@
 <script>
 import NavBar from '../../components/NavBar'
 import NavMenu from '../../components/NavMenu'
+import Rent from '../../components/Rent'
 
 export default {
-  components: {NavBar, NavMenu},
+  components: {Rent, NavBar, NavMenu},
   data () {
     return {
-      name: ''
+      name: '',
+      showRent: 'true'
     }
+  },
+  mounted () {
+    this.$router.push('/rent')
   },
   methods: {}
 }
