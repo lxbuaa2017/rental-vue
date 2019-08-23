@@ -1,37 +1,39 @@
 <template>
-  <div>
+  <div id="main">
     <img src="../../assets/logo.png">
     <div class="login-wrap" v-show="showLogin">
       <h3>登录</h3>
       <p v-show="showTishi">{{tishi}}</p>
-      <input type="text" placeholder="请输入用户名" v-model="username"/>
-      <input type="password" placeholder="请输入密码" v-model="password"/>
-      <button v-on:click="login">登录</button>
-      <span v-on:click="ToRegister">没有账号？马上注册</span>
+      <el-input type="text" placeholder="请输入用户名" v-model="username"></el-input>
+      <el-input type="password" placeholder="请输入密码" v-model="password"></el-input>
+      <el-button v-on:click="login">登录</el-button>
+      <el-link :underline="false" v-on:click="ToRegister">没有账号？马上注册</el-link>
     </div>
 
     <div class="register-wrap" v-show="showRegister">
       <h3>注册</h3>
       <p v-show="showTishi">{{tishi}}</p>
-      <input type="text" placeholder="用户名" v-model="newUsername"/>
-      <input type="password" placeholder="密码" v-model="newPassword"/>
-      <input type="password" placeholder="确认密码" v-model="confirmPassword"/>
-      <input type="text" placeholder="手机号码" v-model="phone"/>
-      <input type="email" placeholder="电子邮箱" v-model="email"/>
+      <el-input type="text" placeholder="用户名" v-model="newUsername"></el-input>
+      <el-input type="password" placeholder="密码" v-model="newPassword"></el-input>
+      <el-input type="password" placeholder="确认密码" v-model="confirmPassword"></el-input>
+      <el-input type="text" placeholder="手机号码" v-model="phone"></el-input>
+      <el-input type="email" placeholder="电子邮箱" v-model="email"></el-input>
       <div id="optionbox">
-        <input type="radio" id="one" value="true" v-model="isMale"/>
-        <label for="one">男</label>
-        <input type="radio" id="two" value="false" v-model="isMale"/>
-        <label for="two">女</label>
+        <el-radio v-model="isMale" label="true">男</el-radio>
+        <el-radio v-model="isMale" label="false">女</el-radio>
       </div>
-      <input type="number" min="0" max="150" placeholder="年龄" v-model="age"/>
-      <button v-on:click="register">注册</button>
-      <span v-on:click="ToLogin">已有账号？马上登录</span>
+      <el-input type="number" min="0" max="150" placeholder="年龄" v-model="age"></el-input>
+      <el-button v-on:click="register">注册</el-button>
+      <el-link :underline="false" v-on:click="ToLogin">已有账号？马上登录</el-link>
     </div>
   </div>
 </template>
 
 <style>
+  #main {
+    vertical-align: center;
+  }
+
   #optionbox {
     width: 250px;
     display: flex;
@@ -40,16 +42,22 @@
     align-content: flex-start;
   }
 
-  #one, #two {
-    width: 20px;
-    height: 20px;
-    text-align: left;
-    margin-left: 10px;
-    margin-right: 0;
+  .login-wrap {
+    width: 250px;
+    text-align: center;
+    margin: auto;
+    display: inline-block;
+    vertical-align: top;
+    padding-left: 20px;
   }
 
-  .login-wrap {
+  .register-wrap {
+    width: 250px;
     text-align: center;
+    margin: auto;
+    display: inline-block;
+    vertical-align: top;
+    padding-left: 20px;
   }
 
   input {
@@ -82,10 +90,6 @@
 
   span {
     cursor: pointer;
-  }
-
-  span:hover {
-    color: #41b883;
   }
 </style>
 

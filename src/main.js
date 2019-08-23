@@ -7,6 +7,7 @@ import axios from 'axios'
 import VueResource from 'vue-resource'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+import '../theme/index.css'
 
 Vue.prototype.$axios = axios
 axios.defaults.headers.common['token'] = 'f4c902c9ae5a2a9d8f84868ad064e706'

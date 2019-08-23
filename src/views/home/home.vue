@@ -5,7 +5,9 @@
     <el-container>
       <el-header>Header</el-header>
       <el-container>
-        <el-aside width="200px">Aside</el-aside>
+        <el-aside width="200px">
+          <nav-menu/>
+        </el-aside>
         <el-main>Main</el-main>
       </el-container>
     </el-container>
@@ -14,8 +16,10 @@
 
 <script>
 import {getCookie, delCookie} from '../../assets/js/cookie.js'
+import NavMenu from '../../components/NavMenu'
 
 export default {
+  components: {NavMenu},
   data () {
     return {
       name: ''
