@@ -165,15 +165,10 @@ export default {
         this.$axios.post('http://localhost:8081/register', data).then((res) => {
           console.log(res)
           if (res.data === 'ok') {
+            alert('注册成功!')
             this.tishi = '注册成功'
             this.showTishi = true
-            this.username = ''
-            this.password = ''
-            setTimeout(function () {
-              this.showRegister = false
-              this.showLogin = true
-              this.showTishi = false
-            }.bind(this), 1000)
+            this.ToLogin()
           }
         })
       }
