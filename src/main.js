@@ -6,6 +6,7 @@ import router from './router'
 import axios from 'axios'
 import VueResource from 'vue-resource'
 import ElementUI from 'element-ui'
+import infiniteScroll from 'vue-infinite-scroll'
 import 'element-ui/lib/theme-chalk/index.css'
 import '../theme/index.css'
 
@@ -16,6 +17,7 @@ axios.defaults.headers.post['Content-type'] = 'application/json;charset=UTF-8'
 Vue.config.productionTip = false
 Vue.use(VueResource)
 Vue.use(ElementUI)
+Vue.use(infiniteScroll)
 
 Vue.http.options.emulateHTTP = true
 Vue.http.options.emulateJSON = true
