@@ -6,25 +6,33 @@
       <p v-show="showTishi">{{tishi}}</p>
       <el-input type="text" placeholder="请输入用户名" v-model="username"></el-input>
       <el-input type="password" placeholder="请输入密码" v-model="password"></el-input>
-      <el-button v-on:click="login">登录</el-button>
+      <el-button v-on:click="login" style="margin: 5px">登录</el-button>
       <el-link :underline="false" v-on:click="ToRegister">没有账号？马上注册</el-link>
     </div>
 
     <div class="register-wrap" v-show="showRegister">
       <h3>注册</h3>
       <p v-show="showTishi">{{tishi}}</p>
-      <el-input type="text" placeholder="用户名" v-model="newUsername"></el-input>
-      <el-input type="password" placeholder="密码" v-model="newPassword"></el-input>
-      <el-input type="password" placeholder="确认密码" v-model="confirmPassword"></el-input>
-      <el-input type="text" placeholder="手机号码" v-model="phone"></el-input>
-      <el-input type="email" placeholder="电子邮箱" v-model="email"></el-input>
-      <div id="optionbox">
-        <el-radio v-model="isMale" label="true">男</el-radio>
-        <el-radio v-model="isMale" label="false">女</el-radio>
+      <div id="tenantOptionRegister">
+        <el-input type="text" placeholder="用户名" v-model="newUsername"></el-input>
+        <el-input type="password" placeholder="密码" maxlength="16" v-model="newPassword"></el-input>
+        <el-input type="password" placeholder="确认密码" maxlength="16" v-model="confirmPassword"></el-input>
+        <el-input type="text" placeholder="手机号码" v-model="phone"></el-input>
+        <div id="verification">
+          <el-input type="text" placeholder="验证码" maxlength="6" autocomplete="off" v-model="authentication"
+                    style="width: 50%; float: left"></el-input>
+          <el-button id="sendBtn" style="width: 45%;float: right;vertical-align: top;margin: 5px"
+                    v-on:click="sendCode" v-text="btnText" :disabled="isDisabled"/>
+        </div>
+        <el-input type="email" placeholder="电子邮箱" v-model="email"></el-input>
+        <div id="optionbox" style="padding: 10px">
+          <el-radio v-model="isMale" label="true">男</el-radio>
+          <el-radio v-model="isMale" label="false">女</el-radio>
+        </div>
+        <el-input type="number" min="0" max="150" placeholder="年龄" v-model="age"></el-input>
+        <el-button v-on:click="register" style="margin: 5px;">注册</el-button>
+        <el-link :underline="false" v-on:click="ToLogin">已有账号？马上登录</el-link>
       </div>
-      <el-input type="number" min="0" max="150" placeholder="年龄" v-model="age"></el-input>
-      <el-button v-on:click="register">注册</el-button>
-      <el-link :underline="false" v-on:click="ToLogin">已有账号？马上登录</el-link>
     </div>
   </div>
 </template>
@@ -32,15 +40,12 @@
 <style>
   #main {
     vertical-align: center;
-    padding-top: 50px;
+    padding-top: 40px;
   }
 
-  #optionbox {
+  #verification {
+    display: inline-block;
     width: 250px;
-    display: flex;
-    justify-content: space-around;
-    margin: 0 auto;
-    align-content: flex-start;
   }
 
   .login-wrap {
@@ -66,7 +71,7 @@
     width: 250px;
     height: 40px;
     line-height: 40px;
-    margin: 0 auto 10px;
+    margin: 5px;
     outline: none;
     border: 1px solid #888;
     padding: 10px;
@@ -86,7 +91,7 @@
     background-color: #41b883;
     color: #fff;
     font-size: 16px;
-    margin: 0 auto 5px;
+    margin: 5px;
   }
 
   span {
@@ -106,6 +111,10 @@ export default {
       newPassword: '',
       confirmPassword: '',
       phone: '',
+      authentication: '',
+      btnText: '获取验证码',
+      isDisabled: false,
+      wait: 60,
       email: '',
       isMale: 'true',
       age: '',
@@ -136,8 +145,6 @@ export default {
           if (res.data === 0) {
             this.tishi = '用户名或密码错误'
             this.showTishi = true
-          } else if (res.data === 'admin') {
-            this.$router.push('/main')
           } else {
             this.tishi = '登录成功'
             this.showTishi = true
@@ -158,6 +165,39 @@ export default {
       this.showTishi = false
       this.showRegister = false
       this.showLogin = true
+    },
+    sendCode () {
+      var rePhone = /^1([38][0-9]|4[579]|5[0-3,5-9]|6[6]|7[0135678]|9[89])\d{8}$/
+      if (!rePhone.test(this.phone)) {
+        this.tishi = '手机号无效'
+        this.showTishi = true
+      } else {
+        this.showTishi = false
+        let data = {'phone': this.phone}
+        this.$axios.post('http://localhost:8081/sendSms', data, {withCredentials: true}).then((res) => {
+          console.log(res)
+          if (res.data === true) {
+            this.timer()
+          } else {
+            this.tishi = '获取验证码失败'
+            this.showTishi = true
+          }
+        })
+      }
+    },
+    timer () {
+      if (this.wait === 0) {
+        this.btnText = '获取验证码'
+        this.isDisabled = false
+        this.wait = 60
+      } else {
+        this.isDisabled = true
+        this.btnText = this.wait + '秒后重发'
+        this.wait--
+        setTimeout(function () {
+          this.timer()
+        }.bind(this), 1000)
+      }
     },
     register () {
       var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -184,27 +224,39 @@ export default {
         this.tishi = '年龄无效'
         this.showTishi = true
       } else {
-        let data = {'username': this.newUsername,
-          'password': this.newPassword,
-          'phone': this.phone,
-          'email': this.email,
-          'isMale': this.isMale,
-          'age': this.age}
-        this.$axios.post('http://localhost:8081/register', data).then((res) => {
+        let verify = {'code': this.authentication}
+        this.$axios.post('http://localhost:8081/verify', verify, {withCredentials: true}).then((res) => {
           console.log(res)
-          if (res.data === 1000) {
-            this.tishi = '注册成功'
+          if (res.data !== 1000) {
+            this.tishi = '验证码错误'
             this.showTishi = true
-            this.username = ''
-            this.password = ''
-            setTimeout(function () {
-              this.showRegister = false
-              this.showLogin = true
-              this.showTishi = false
-            }.bind(this), 1000)
-          } else if (res.data === 1028) {
-            this.tishi = '用户名已存在'
-            this.showTishi = true
+          } else {
+            let data = {
+              'username': this.newUsername,
+              'password': this.newPassword,
+              'phone': this.phone,
+              'code': this.authentication,
+              'email': this.email,
+              'isMale': this.isMale,
+              'age': this.age
+            }
+            this.$axios.post('http://localhost:8081/register', data).then((res) => {
+              console.log(res)
+              if (res.data === 1000) {
+                this.tishi = '注册成功'
+                this.showTishi = true
+                this.username = ''
+                this.password = ''
+                setTimeout(function () {
+                  this.showRegister = false
+                  this.showLogin = true
+                  this.showTishi = false
+                }.bind(this), 1000)
+              } else if (res.data === 1028) {
+                this.tishi = '用户名已存在'
+                this.showTishi = true
+              }
+            })
           }
         })
       }
