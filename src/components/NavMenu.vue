@@ -4,7 +4,7 @@
       <el-menu
         default-active="1"
         class="el-menu-vertical-demo"
-        unique-opened="true"
+        unique-opened=true
         @open="handleOpen"
         @close="handleClose">
         <el-menu-item index="1" v-on:click="showRent">
@@ -40,7 +40,6 @@
   .el-col-12 {
     width: 100%;
     text-align: left;
-    padding-top: 3px;
     height: 100%;
   }
 
