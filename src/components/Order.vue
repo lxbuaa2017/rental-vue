@@ -35,7 +35,7 @@
   </div>
 </template>
 
-<style>
+<style scoped>
   .time {
     font-size: 13px;
     color: #999;
@@ -100,7 +100,7 @@ export default {
   },
   mounted () {
     // get total here
-    this.total = 277
+    this.total = 37
   },
   computed: {
     noMore () {
@@ -119,14 +119,14 @@ export default {
             break
           }
           // get order information here
-          this.count++
           this.lists.push({
-            id: this.id++,
+            id: this.id,
             image: 'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png',
-            title: '测试数据',
+            title: '测试数据' + this.id++,
             time: '2019年8月25日 10:51',
             address: '北京市海淀区学院路37号'
           })
+          this.count++
         }
         this.loading = false
       }, 2000)
