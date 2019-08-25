@@ -15,7 +15,7 @@ Vue.prototype.$ajax = axios
 axios.defaults.baseURL = '/api'
 axios.defaults.headers.common['token'] = 'f4c902c9ae5a2a9d8f84868ad064e706'
 axios.defaults.headers.post['Content-type'] = 'application/json;charset=UTF-8'
-
+axios.defaults.headers.get['Content-type'] = 'application/json;charset=UTF-8'
 Vue.config.productionTip = false
 Vue.use(VueResource)
 Vue.use(ElementUI)

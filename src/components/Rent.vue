@@ -2,8 +2,8 @@
   <div class="rent-wrap">
     <div style="text-align: left">
       <el-radio-group v-model="typeRadio" border="true" size=50%>
-        <el-radio-button label="短租"></el-radio-button>
-        <el-radio-button label="长租"></el-radio-button>
+        <el-radio-button label="短租" @click.native="findShortRent()"></el-radio-button>
+        <el-radio-button label="长租" @click.native="findLongRent()"></el-radio-button>
       </el-radio-group>
     </div>
     <el-tabs type="border-card">
@@ -18,10 +18,10 @@
             infinite-scroll-disabled="disabled"
             style="list-style: none"
           >
-            <li v-for="room1 in rooms" :key="room1"
+            <li v-for="room1 in this.rooms" :key="room1"
                 style="list-style: none"
             >
-              <Room :room="room1" @click.native="SdialogFormVisible = true,rent_room = room1"></Room>
+              <Room v-if="room1.type==='单人间'" :room="room1" @click.native="SdialogFormVisible = true,rent_room = room1"></Room>
               <el-dialog title="请填写申请信息" :visible.sync="SdialogFormVisible">
                 <el-form :model="form">
                   <el-form-item label="姓名" :label-width="formLabelWidth">
@@ -60,8 +60,106 @@
           <p v-if="noMore">没有更多了</p>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="双人间"><Room></Room></el-tab-pane>
-      <el-tab-pane label="四人间"><Room></Room></el-tab-pane>
+      <el-tab-pane label="双人间">
+        <div class="infinite-list-wrapper" style="overflow:auto">
+          <ul
+            class="list"
+            v-infinite-scroll="load"
+            infinite-scroll-disabled="disabled"
+            style="list-style: none"
+          >
+            <li v-for="room1 in this.rooms" :key="room1"
+                style="list-style: none"
+            >
+              <Room v-if="room1.type==='双人间'" :room="room1" @click.native="SdialogFormVisible = true,rent_room = room1"></Room>
+              <el-dialog title="请填写申请信息" :visible.sync="SdialogFormVisible">
+                <el-form :model="form">
+                  <el-form-item label="姓名" :label-width="formLabelWidth">
+                    <el-input v-model="username" autocomplete="off"></el-input>
+                  </el-form-item>
+                  <el-form-item label="身份证" :label-width="formLabelWidth">
+                    <el-input v-model="shortRentOrder.tenantId" autocomplete="off"></el-input>
+                  </el-form-item>
+                  <el-form-item label="房源" :label-width="formLabelWidth">
+                    <el-input
+                      placeholder="房源地址"
+                      v-model="rent_room.address"
+                      :disabled="true">
+                    </el-input>
+                  </el-form-item>
+                  <el-form-item label="租住时间" :label-width="formLabelWidth">
+                    <el-date-picker
+                      v-model="dates"
+                      type="daterange"
+                      range-separator="至"
+                      start-placeholder="下午入住"
+                      end-placeholder="上午离开"
+                      value-format="yyyy-MM-dd"
+                    >
+                    </el-date-picker>
+                  </el-form-item>
+                </el-form>
+                <div slot="footer" class="dialog-footer">
+                  <el-button @click="SdialogFormVisible = false">取 消</el-button>
+                  <el-button type="primary" @click="commitShortRent()">确 定</el-button>
+                </div>
+              </el-dialog>
+            </li>
+          </ul>
+          <p v-if="loading">加载中...</p>
+          <p v-if="noMore">没有更多了</p>
+        </div>
+      </el-tab-pane>
+      <el-tab-pane label="四人间">
+        <div class="infinite-list-wrapper" style="overflow:auto">
+          <ul
+            class="list"
+            v-infinite-scroll="load"
+            infinite-scroll-disabled="disabled"
+            style="list-style: none"
+          >
+            <li v-for="room1 in this.rooms" :key="room1"
+                style="list-style: none"
+            >
+              <Room v-if="room1.type==='四人间'" :room="room1" @click.native="SdialogFormVisible = true,rent_room = room1"></Room>
+              <el-dialog title="请填写申请信息" :visible.sync="SdialogFormVisible">
+                <el-form :model="form">
+                  <el-form-item label="姓名" :label-width="formLabelWidth">
+                    <el-input v-model="username" autocomplete="off"></el-input>
+                  </el-form-item>
+                  <el-form-item label="身份证" :label-width="formLabelWidth">
+                    <el-input v-model="shortRentOrder.tenantId" autocomplete="off"></el-input>
+                  </el-form-item>
+                  <el-form-item label="房源" :label-width="formLabelWidth">
+                    <el-input
+                      placeholder="房源地址"
+                      v-model="rent_room.address"
+                      :disabled="true">
+                    </el-input>
+                  </el-form-item>
+                  <el-form-item label="租住时间" :label-width="formLabelWidth">
+                    <el-date-picker
+                      v-model="dates"
+                      type="daterange"
+                      range-separator="至"
+                      start-placeholder="下午入住"
+                      end-placeholder="上午离开"
+                      value-format="yyyy-MM-dd"
+                    >
+                    </el-date-picker>
+                  </el-form-item>
+                </el-form>
+                <div slot="footer" class="dialog-footer">
+                  <el-button @click="SdialogFormVisible = false">取 消</el-button>
+                  <el-button type="primary" @click="commitShortRent()">确 定</el-button>
+                </div>
+              </el-dialog>
+            </li>
+          </ul>
+          <p v-if="loading">加载中...</p>
+          <p v-if="noMore">没有更多了</p>
+        </div>
+      </el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -113,7 +211,6 @@ export default {
       username: '',
       // dialogRoomAddress: '',
       dates: [],
-      input: '花园路77号',
       typeRadio: '短租',
       rooms: null,
       loading: false,
@@ -142,14 +239,33 @@ export default {
   },
   mounted () {
     this.username = getCookie('username')
-    var self = this
-    this.$axios.get('http://localhost:8081/room/findAll', {withCredentials: true}).then(function (res) {
-      console.log(res.data)
-      self.rooms = res.data
-      self.count = res.data.length
-    })
+    // var self = this
+    // this.$axios.get('http://localhost:8081/room/findAll', {withCredentials: true}).then(function (res) {
+    //   console.log(res.data)
+    //   self.rooms = res.data
+    //   self.count = res.data.length
+    // }
+    this.findShortRent()
   },
   methods: {
+    findShortRent () {
+      var self = this
+      var data = {'rentType': '2005'}
+      this.$axios.post('http://localhost:8081/room/findByRentType', data, {withCredentials: true}).then(function (res) { //, {withCredentials: true}
+        console.log(res.data)
+        self.rooms = res.data
+        self.count = res.data.length
+      })
+    },
+    findLongRent () {
+      var self = this
+      var data = {'rentType': '2004'}
+      this.$axios.post('http://localhost:8081/room/findByRentType', data, {withCredentials: true}).then(function (res) { //, {withCredentials: true}
+        console.log(res.data)
+        self.rooms = res.data
+        self.count = res.data.length
+      })
+    },
     commitShortRent () {
       this.SdialogFormVisible = false
       // eslint-disable-next-line no-unused-vars
