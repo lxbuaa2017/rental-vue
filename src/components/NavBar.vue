@@ -1,5 +1,5 @@
 <template>
-    <el-menu class="el-menu-demo" mode="horizontal" @select="handleSelect">
+    <el-menu class="el-menu-demo" mode="horizontal" :default-active="activeIndex" @select="handleSelect">
       <el-link :underline="false" id="header"><h1>青年租房</h1></el-link>
       <el-submenu index="1" id="name">
         <template slot="title">{{name}}</template>
@@ -34,7 +34,8 @@ import {getCookie, delCookie} from '../assets/js/cookie.js'
 export default {
   data () {
     return {
-      name: ''
+      name: 'NavBar',
+      activeIndex: '2-2'
     }
   },
   mounted () {
