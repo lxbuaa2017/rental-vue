@@ -1,6 +1,6 @@
 <template>
   <div class="tickethistory-wrap">
-    <h2 style="padding: 10px; text-align: left">历史记录</h2>
+    <h2 style="padding-left: 10px; text-align: left">历史记录</h2>
     <div class="infinite-list-wrapper" style="overflow:auto">
       <ul
         class="list"
@@ -100,6 +100,7 @@
 export default {
   data () {
     return {
+      name: 'TicketHistoryView',
       count: 10,
       loading: false,
       currentDate: new Date()
@@ -124,7 +125,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-
-</style>

@@ -4,11 +4,11 @@
       <el-header>
         <nav-bar/>
       </el-header>
-      <el-container>
+      <el-container style="padding-top: 3px">
         <el-aside width="200px">
           <nav-menu/>
         </el-aside>
-        <el-main>
+        <el-main style="height: inherit">
           <router-view/>
         </el-main>
       </el-container>
