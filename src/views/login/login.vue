@@ -6,7 +6,7 @@
       <p v-show="showTishi">{{tishi}}</p>
       <el-input type="text" placeholder="请输入用户名" v-model="username"></el-input>
       <el-input type="password" placeholder="请输入密码" v-model="password"></el-input>
-      <el-button v-on:click="login" style="margin: 5px">登录</el-button>
+      <el-button type="primary" v-on:click="login" style="margin: 5px">登录</el-button>
       <el-link :underline="false" v-on:click="ToRegister">没有账号？马上注册</el-link>
     </div>
 
@@ -18,11 +18,11 @@
         <el-input type="password" placeholder="密码" maxlength="16" v-model="newPassword"></el-input>
         <el-input type="password" placeholder="确认密码" maxlength="16" v-model="confirmPassword"></el-input>
         <el-input type="text" placeholder="手机号码" v-model="phone"></el-input>
-        <div id="verification">
+        <div id="verification" style="margin: 5px 5px 2px;">
           <el-input type="text" placeholder="验证码" maxlength="6" autocomplete="off" v-model="authentication"
-                    style="width: 50%; float: left"></el-input>
-          <el-button id="sendBtn" style="width: 45%;float: right;vertical-align: top;margin: 5px"
-                    v-on:click="sendCode" v-text="btnText" :disabled="isDisabled"/>
+                    style="width: 50%; float: left; margin: 0"></el-input>
+          <el-button id="sendBtn" style="width: 46%;float: right;margin: 0;font-size: 13px"
+                    type="primary" plain v-on:click="sendCode" v-text="btnText" :disabled="isDisabled"/>
         </div>
         <el-input type="email" placeholder="电子邮箱" v-model="email"></el-input>
         <div id="optionbox" style="padding: 10px">
@@ -30,14 +30,14 @@
           <el-radio v-model="isMale" label="false">女</el-radio>
         </div>
         <el-input type="number" min="0" max="150" placeholder="年龄" v-model="age"></el-input>
-        <el-button v-on:click="register" style="margin: 5px;">注册</el-button>
+        <el-button type="primary" v-on:click="register" style="margin: 5px;">注册</el-button>
         <el-link :underline="false" v-on:click="ToLogin">已有账号？马上登录</el-link>
       </div>
     </div>
   </div>
 </template>
 
-<style>
+<style scoped>
   #main {
     vertical-align: center;
     padding-top: 40px;
@@ -66,16 +66,11 @@
     padding-left: 20px;
   }
 
-  input {
-    display: block;
+  .el-input {
     width: 250px;
     height: 40px;
     line-height: 40px;
     margin: 5px;
-    outline: none;
-    border: 1px solid #888;
-    padding: 10px;
-    box-sizing: border-box;
   }
 
   p {
@@ -83,14 +78,9 @@
   }
 
   button {
-    display: block;
     width: 250px;
     height: 40px;
-    line-height: 40px;
-    border: none;
-    background-color: #41b883;
-    color: #fff;
-    font-size: 16px;
+    font-size: 15px;
     margin: 5px;
   }
 

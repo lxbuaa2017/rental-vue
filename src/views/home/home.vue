@@ -8,7 +8,7 @@
         <el-aside width="200px">
           <nav-menu/>
         </el-aside>
-        <el-main style="height: inherit">
+        <el-main style="height: inherit" id="main">
           <router-view/>
         </el-main>
       </el-container>
@@ -16,11 +16,14 @@
   </div>
 </template>
 
-<style>
+<style scoped>
   .el-main {
     padding: 5px;
   }
 
+</style>
+
+<style>
   body {
     margin: 0;
   }
