@@ -12,9 +12,9 @@
         {{address}}
       </el-col>
       <el-col style="width:33%;vertical-align: center">
-        短租{{sr_price}}元/天
+        短租{{this.sr_price}}元/天
         <br>
-        长租{{lr_price}}元/月
+        长租{{this.lr_price}}元/月
       </el-col>
     </el-row>
   </div>

@@ -21,35 +21,37 @@
             <li v-for="room1 in rooms" :key="room1"
                 style="list-style: none"
             >
-              <Room :room="room1" @click.native="SdialogFormVisible = true,dialogRoomAddress = room1.address"></Room>
+              <Room :room="room1" @click.native="SdialogFormVisible = true,rent_room = room1"></Room>
               <el-dialog title="请填写申请信息" :visible.sync="SdialogFormVisible">
                 <el-form :model="form">
                   <el-form-item label="姓名" :label-width="formLabelWidth">
                     <el-input v-model="username" autocomplete="off"></el-input>
                   </el-form-item>
                   <el-form-item label="身份证" :label-width="formLabelWidth">
-                    <el-input v-model="form.name" autocomplete="off"></el-input>
+                    <el-input v-model="shortRentOrder.tenantId" autocomplete="off"></el-input>
                   </el-form-item>
                   <el-form-item label="房源" :label-width="formLabelWidth">
                     <el-input
                       placeholder="房源地址"
-                      v-model="dialogRoomAddress"
+                      v-model="rent_room.address"
                       :disabled="true">
                     </el-input>
                   </el-form-item>
                   <el-form-item label="租住时间" :label-width="formLabelWidth">
                     <el-date-picker
-                      v-model="value1"
+                      v-model="dates"
                       type="daterange"
                       range-separator="至"
                       start-placeholder="下午入住"
-                      end-placeholder="上午离开">
+                      end-placeholder="上午离开"
+                      value-format="yyyy-MM-dd"
+                    >
                     </el-date-picker>
                   </el-form-item>
                 </el-form>
                 <div slot="footer" class="dialog-footer">
                   <el-button @click="SdialogFormVisible = false">取 消</el-button>
-                  <el-button type="primary" @click="SdialogFormVisible = false">确 定</el-button>
+                  <el-button type="primary" @click="commitShortRent()">确 定</el-button>
                 </div>
               </el-dialog>
             </li>
@@ -72,6 +74,15 @@ export default {
   components: {Room},
   data () {
     return {
+      rent_room: {},
+      shortRentOrder: {
+        'checkInDay': '',
+        'leaveDay': '',
+        'tenantName': '',
+        'tenantId': '',
+        'state': 1823,
+        'room': ''
+      },
       pickerOptions: {
         shortcuts: [{
           text: '最近一周',
@@ -100,8 +111,8 @@ export default {
         }]
       },
       username: '',
-      dialogRoomAddress: '',
-      value1: '',
+      // dialogRoomAddress: '',
+      dates: [],
       input: '花园路77号',
       typeRadio: '短租',
       rooms: null,
@@ -139,6 +150,19 @@ export default {
     })
   },
   methods: {
+    commitShortRent () {
+      this.SdialogFormVisible = false
+      // eslint-disable-next-line no-unused-vars
+      var order = this.shortRentOrder
+      order.tenantName = this.username
+      // eslint-disable-next-line no-undef
+      order.checkInDay = this.dates[0]
+      // eslint-disable-next-line no-undef
+      order.leaveDay = this.dates[1]
+      order.room = this.rent_room
+      console.log(order)
+      this.$axios.post('http://localhost:8081/shortRentEnroll', order)
+    },
     load () {
       this.loading = true
       setTimeout(() => {
