@@ -13,7 +13,7 @@
         </el-menu-item>
         <el-submenu index="2">
           <template slot="title">
-            <i class="el-icon-setting"></i>
+            <i class="el-icon-house"></i>
             <span>管理房间</span>
           </template>
           <el-menu-item-group>
@@ -25,6 +25,16 @@
           <i class="el-icon-files"></i>
           <span slot="title">管理合同</span>
         </el-menu-item>
+        <el-submenu index="5">
+          <template slot="title">
+            <i class="el-icon-s-order"></i>
+            <span>管理订单</span>
+          </template>
+          <el-menu-item-group>
+            <el-menu-item index="5-1" v-on:click="showProcessed">已处理</el-menu-item>
+            <el-menu-item index="5-2" v-on:click="showUnprocessed">待处理</el-menu-item>
+          </el-menu-item-group>
+        </el-submenu>
         <el-submenu index="4">
           <template slot="title">
             <i class="el-icon-setting"></i>
@@ -54,32 +64,38 @@
 </style>
 
 <script>
-export default {
-  methods: {
-    handleOpen (key, keyPath) {
-      console.log(key, keyPath)
-    },
-    handleClose (key, keyPath) {
-      console.log(key, keyPath)
-    },
-    showManageTenant () {
-      this.$router.push('/manageTenant')
-    },
-    showAvailable () {
-      this.$router.push('/available')
-    },
-    showUnavailable () {
-      this.$router.push('/unavailable')
-    },
-    showManageContract () {
-      this.$router.push('/manageContract')
-    },
-    showArrangeMaster () {
-      this.$router.push('/arrangeMaster')
-    },
-    showReplyComplaint () {
-      this.$router.push('/replyComplaint')
+  export default {
+    methods: {
+      handleOpen (key, keyPath) {
+        console.log(key, keyPath)
+      },
+      handleClose (key, keyPath) {
+        console.log(key, keyPath)
+      },
+      showManageTenant () {
+        this.$router.push('/manageTenant')
+      },
+      showAvailable () {
+        this.$router.push('/available')
+      },
+      showUnavailable () {
+        this.$router.push('/unavailable')
+      },
+      showManageContract () {
+        this.$router.push('/manageContract')
+      },
+      showArrangeMaster () {
+        this.$router.push('/arrangeMaster')
+      },
+      showReplyComplaint () {
+        this.$router.push('/replyComplaint')
+      },
+      showProcessed () {
+        this.$router.push('/processed')
+      },
+      showUnprocessed () {
+        this.$router.push('/unprocessed')
+      }
     }
   }
-}
 </script>
