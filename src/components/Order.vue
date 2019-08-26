@@ -103,6 +103,7 @@ export default {
     this.$axios.get('http://localhost:8081/getOrderTotal', {withCredentials: true}).then((res) => {
       this.total = res
     })
+    this.total = 27
   },
   computed: {
     noMore () {
