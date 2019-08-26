@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/views/login/login.vue'
 import Register from '@/views/register/register.vue'
+import Service from '@/views/service/service.vue'
 import Main from '@/views/main/main.vue'
 import Home from '@/views/home/home.vue'
 import Rent from '@/components/Rent.vue'
@@ -10,14 +11,14 @@ import OrderHistory from '@/components/OrderHistory.vue'
 import Ticket from '@/components/Ticket.vue'
 import TicketHistory from '@/components/TicketHistory.vue'
 import Profile from '@/components/Profile.vue'
-import Detail from '@/views/detail/detail.vue'
-import Service from '@/views/service/service.vue'
 import ArrangeMaster from '@/components/ArrangeMaster.vue'
 import Available from '@/components/Available.vue'
 import Unavailable from '@/components/Unavailable.vue'
 import ManageTenant from '@/components/ManageTenant.vue'
 import ManageContract from '@/components/ManageContract.vue'
 import ReplyComplaint from '@/components/ReplyComplaint.vue'
+import Processed from '@/components/Processed.vue'
+import Unprocessed from '@/components/Unprocessed.vue'
 import VueResource from 'vue-resource'
 
 Vue.use(Router)
@@ -79,11 +80,6 @@ export default new Router({
       ]
     },
     {
-      path: '/detail',
-      name: 'Detail',
-      component: Detail
-    },
-    {
       path: '/service',
       name: 'Service',
       component: Service,
@@ -117,6 +113,16 @@ export default new Router({
           path: '/replyComplaint',
           name: 'ReplyComplaint',
           component: ReplyComplaint
+        },
+        {
+          path: '/processed',
+          name: 'Processed',
+          component: Processed
+        },
+        {
+          path: '/unprocessed',
+          name: 'Unprocessed',
+          component: Unprocessed
         }
       ]
     }
