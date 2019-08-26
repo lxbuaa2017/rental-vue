@@ -7,20 +7,21 @@
     </el-header>
     <el-main>
       <div style="margin: 20px;height: inherit">
-        <div style="display: inline">
-          <el-carousel trigger="click" height="360px" indicator-position="none" :autoplay="false" :loop="false"
-                       style="padding: 20px;width: 480px">
+        <div style="display: inline-block;width: fit-content">
+          <el-carousel trigger="click" height="450px" indicator-position="none" :autoplay="false" :loop="false"
+                       style="width: 600px;vertical-align: top">
             <el-carousel-item v-for="item in 10" :key="item">
               <h3 class="small">{{ item }}</h3>
             </el-carousel-item>
           </el-carousel>
         </div>
-        <div style="display: inline;width: auto">
+        <div style="display: inline-block;text-align: left;width: fit-content;max-width: 30%;padding-left: 50px;vertical-align: top">
           <h1>房子名</h1>
           <p>位置</p>
           <p>几人间</p>
           <p>长租短租，还有价钱</p>
           <p>该联系谁去看房子</p>
+          <p>一个超级他妈长的p块，写这个玩意就是为了看看我这个描述div到底能有多宽，看看p块能不能自动换行</p>
         </div>
       </div>
     </el-main>
@@ -37,6 +38,19 @@ export default {
   },
   mounted () {
     // get detail here
+    let id = this.$route.params.id
+    let data = {'id': id}
+    this.$axios.post('http://localhost:8081/room', data).then((res) => {
+      if (res.data.address === '') {
+        this.$route.push('/')
+      } else {
+        this.data.push({
+          'type': res.data.type,
+          'address': res.data.address
+
+        })
+      }
+    })
   }
 }
 </script>

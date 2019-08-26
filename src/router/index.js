@@ -11,6 +11,7 @@ import OrderHistory from '@/components/OrderHistory.vue'
 import Ticket from '@/components/Ticket.vue'
 import TicketHistory from '@/components/TicketHistory.vue'
 import Profile from '@/components/Profile.vue'
+import Detail from '@/views/detail/detail.vue'
 import ArrangeMaster from '@/components/ArrangeMaster.vue'
 import Available from '@/components/Available.vue'
 import Unavailable from '@/components/Unavailable.vue'
@@ -78,6 +79,11 @@ export default new Router({
           component: Profile
         }
       ]
+    },
+    {
+      path: '/detail/:id',
+      name: 'Detail',
+      component: Detail
     },
     {
       path: '/service',
