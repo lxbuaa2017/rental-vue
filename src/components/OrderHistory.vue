@@ -6,39 +6,26 @@
         class="list"
         v-infinite-scroll="load"
         infinite-scroll-disabled="disabled"
-        style="padding-inline-start: 0px">
-        <div class="orderShow">
-          <el-row>
-            <el-card :body-style="{ padding: '0px' }" shadow="hover">
-              <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
-                   class="image">
-              <div class="label">
-                <div style="padding: 5px">
-                  <el-link :underline="false" style="font-size: 16px">好吃的汉堡</el-link>
-                  <time class="time">2019年8月24日 17:15:00</time>
+        style="list-style-type: none;padding-inline-start: 0px">
+        <li v-for="(list) in lists" v-bind:key="list.id">
+          <div class="orderhistoryShow">
+            <el-row>
+              <el-card :body-style="{ padding: '0px' }" shadow="hover">
+                <img :src=list.image class="image">
+                <div class="label">
+                  <div style="padding: 5px">
+                    <el-link :underline="false" style="font-size: 16px">{{list.title}}</el-link>
+                    <time class="time">{{list.time}}</time>
+                  </div>
+                  <div class="position">{{list.address}}</div>
+                  <div class="buttongroup">
+                    <el-button class="button" type="primary" v-on:click="view(list.id)">查看</el-button>
+                  </div>
                 </div>
-                <div class="position">北京市海淀区学院路37号</div>
-                <div class="buttongroup">
-                  <el-button class="button">查看</el-button>
-                </div>
-              </div>
-            </el-card>
-            <el-card :body-style="{ padding: '0px' }" shadow="hover">
-              <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
-                   class="image">
-              <div class="label">
-                <div style="padding: 5px">
-                  <el-link :underline="false" style="font-size: 16px">好吃的汉堡</el-link>
-                  <time class="time">2019年8月24日 17:15:00</time>
-                </div>
-                <div class="position">北京市海淀区学院路37号</div>
-                <div class="buttongroup">
-                  <el-button class="button">查看</el-button>
-                </div>
-              </div>
-            </el-card>
-          </el-row>
-        </div>
+              </el-card>
+            </el-row>
+          </div>
+        </li>
       </ul>
       <p v-if="loading" style="color: #2c3e50">加载中...</p>
       <p v-if="noMore" style="color: #2c3e50">没有更多了</p>
@@ -100,15 +87,22 @@
 export default {
   data () {
     return {
-      name: 'OrderHistoryView',
-      count: 10,
+      name: 'OrderView',
+      id: 1,
+      count: 0,
+      total: 0,
       loading: false,
-      currentDate: new Date()
+      currentDate: new Date(),
+      lists: []
     }
+  },
+  mounted () {
+    // get total here
+    this.total = 37
   },
   computed: {
     noMore () {
-      return this.count >= 20
+      return this.count >= this.total
     },
     disabled () {
       return this.loading || this.noMore
@@ -118,9 +112,25 @@ export default {
     load () {
       this.loading = true
       setTimeout(() => {
-        this.count += 2
+        for (let i = 0; i < 10; i++) {
+          if (this.count >= this.total) {
+            break
+          }
+          // get order information here
+          this.lists.push({
+            id: this.id,
+            image: 'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png',
+            title: '测试数据' + this.id++,
+            time: '2019年8月25日 10:51',
+            address: '北京市海淀区学院路37号'
+          })
+          this.count++
+        }
         this.loading = false
       }, 2000)
+    },
+    view (id) {
+      alert('Clicked \'view\' on room id ' + id)
     }
   }
 }
