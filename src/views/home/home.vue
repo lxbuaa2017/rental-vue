@@ -13,6 +13,7 @@
         </el-main>
       </el-container>
     </el-container>
+    <el-row><span>Copyright © 2019.All rights reserved.</span></el-row>
   </div>
 </template>
 
