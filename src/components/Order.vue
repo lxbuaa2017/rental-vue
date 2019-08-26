@@ -100,7 +100,9 @@ export default {
   },
   mounted () {
     // get total here
-    this.total = 37
+    this.$axios.get('http://localhost:8081/getOrderTotal', {withCredentials: true}).then((res) => {
+      this.total = res
+    })
   },
   computed: {
     noMore () {
@@ -114,11 +116,11 @@ export default {
     load () {
       this.loading = true
       setTimeout(() => {
+        // get order information here
         for (let i = 0; i < 10; i++) {
           if (this.count >= this.total) {
             break
           }
-          // get order information here
           this.lists.push({
             id: this.id,
             image: 'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png',

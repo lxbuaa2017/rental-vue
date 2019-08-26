@@ -10,6 +10,14 @@ import OrderHistory from '@/components/OrderHistory.vue'
 import Ticket from '@/components/Ticket.vue'
 import TicketHistory from '@/components/TicketHistory.vue'
 import Profile from '@/components/Profile.vue'
+import Detail from '@/views/detail/detail.vue'
+import Service from '@/views/service/service.vue'
+import ArrangeMaster from '@/components/ArrangeMaster.vue'
+import Available from '@/components/Available.vue'
+import Unavailable from '@/components/Unavailable.vue'
+import ManageTenant from '@/components/ManageTenant.vue'
+import ManageContract from '@/components/ManageContract.vue'
+import ReplyComplaint from '@/components/ReplyComplaint.vue'
 import VueResource from 'vue-resource'
 
 Vue.use(Router)
@@ -67,6 +75,48 @@ export default new Router({
           path: '/profile',
           name: 'Profile',
           component: Profile
+        }
+      ]
+    },
+    {
+      path: '/detail',
+      name: 'Detail',
+      component: Detail
+    },
+    {
+      path: '/service',
+      name: 'Service',
+      component: Service,
+      children: [
+        {
+          path: '/arrangeMaster',
+          name: 'ArrangeMaster',
+          component: ArrangeMaster
+        },
+        {
+          path: '/available',
+          name: 'Available',
+          component: Available
+        },
+        {
+          path: '/unavailable',
+          name: 'Unavailable',
+          component: Unavailable
+        },
+        {
+          path: '/manageTenant',
+          name: 'ManageTenant',
+          component: ManageTenant
+        },
+        {
+          path: '/manageContract',
+          name: 'ManageContract',
+          component: ManageContract
+        },
+        {
+          path: '/replyComplaint',
+          name: 'ReplyComplaint',
+          component: ReplyComplaint
         }
       ]
     }
