@@ -1,6 +1,6 @@
 <template>
   <div id="main">
-    <img src="../../assets/logo.png">
+    <img src="../../assets/logo.png" style="width: 200px">
     <div class="login-wrap" v-show="showLogin">
       <h3>登录</h3>
       <p v-show="showTishi">{{tishi}}</p>
@@ -130,7 +130,7 @@ export default {
       } else {
         let data = {'username': this.username, 'password': this.password}
 
-        this.$axios.post('http://114.115.160.38:8081/login', data).then((res) => {
+        this.$axios.post('http://localhost:8081/login', data).then((res) => {
           console.log(res)
           if (res.data === 0) {
             this.tishi = '用户名或密码错误'
@@ -164,13 +164,17 @@ export default {
       } else {
         this.showTishi = false
         let data = {'phone': this.phone}
-        this.$axios.post('http://114.115.160.38:8081/sendSms', data, {withCredentials: true}).then((res) => {
+        this.btnText = '正在发送...'
+        this.isDisabled = true
+        this.$axios.post('http://localhost:8081/sendSms', data, {withCredentials: true}).then((res) => {
           console.log(res)
           if (res.data === true) {
             this.timer()
           } else {
             this.tishi = '获取验证码失败'
             this.showTishi = true
+            this.btnText = '获取验证码'
+            this.isDisabled = false
           }
         })
       }
@@ -215,7 +219,7 @@ export default {
         this.showTishi = true
       } else {
         let verify = {'code': this.authentication}
-        this.$axios.post('http://114.115.160.38:8081/verify', verify, {withCredentials: true}).then((res) => {
+        this.$axios.post('http://localhost:8081/verify', verify, {withCredentials: true}).then((res) => {
           console.log(res)
           if (res.data !== 1000) {
             this.tishi = '验证码错误'
@@ -230,7 +234,7 @@ export default {
               'isMale': this.isMale,
               'age': this.age
             }
-            this.$axios.post('http://114.115.160.38:8081/register', data).then((res) => {
+            this.$axios.post('http://localhost:8081/register', data).then((res) => {
               console.log(res)
               if (res.data === 1000) {
                 this.tishi = '注册成功'

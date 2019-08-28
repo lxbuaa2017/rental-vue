@@ -40,7 +40,7 @@ export default {
     // get detail here
     let id = this.$route.params.id
     let data = {'id': id}
-    this.$axios.post('http://114.115.160.38:8081/room', data).then((res) => {
+    this.$axios.post('http://localhost:8081/room', data).then((res) => {
       if (res.data.address === '') {
         this.$route.push('/')
       } else {
