@@ -17,7 +17,7 @@
                     <el-link :underline="false" style="font-size: 16px">{{list.address}}（{{list.status}}）</el-link>
                     <time class="time">{{list.createdtime}}</time>
                   </div>
-                  <div class="position">{{list.roomtype}}&nbsp;{{list.renttype}}</div>
+                  <div class="position">{{list.roomtype}}&nbsp;&nbsp;{{list.renttype}}</div>
                   <div class="buttongroup">
                     <el-button class="button" type="primary" v-on:click="view(list.orderid)">查看</el-button>
                     <el-button class="button" type="warning" plain v-on:click="repair(list.orderid)">报修</el-button>

@@ -10,8 +10,8 @@
         <div style="display: inline-block;width: fit-content">
           <el-carousel trigger="click" height="450px" indicator-position="none" :autoplay="false" :loop="false"
                        style="width: 600px;vertical-align: top">
-            <el-carousel-item v-for="item in 10" :key="item">
-              <h3 class="small">{{ item }}</h3>
+            <el-carousel-item v-for="item in image" :key="item">
+              <img :src=item style="width: 100%">
             </el-carousel-item>
           </el-carousel>
         </div>
@@ -36,14 +36,16 @@ export default {
   name: 'detail',
   data () {
     return {
-      data: {}
+      data: {},
+      image: []
     }
   },
   mounted () {
     // get detail here
     let self = this
-    this.$axios.get('/api/room/findById', 'id=' + this.$route.params.id).then((res) => {
-      if (res.data.address === '') {
+    this.$axios.get('/api/room/findById?id=' + this.$route.params.id).then((res) => {
+      console.log(res)
+      if (res.data === '') {
         self.$route.push('/')
       } else {
         let state = ''
@@ -78,9 +80,10 @@ export default {
           'renttype': renttype,
           'area': res.data.area,
           'price': price,
-          'landlord': res.data.lardLord.username,
+          'landlord': res.data.landLord.username,
           'phone': res.data.landLord.phone
         }
+        self.image = res.data.imageUrls
       }
     })
   }
