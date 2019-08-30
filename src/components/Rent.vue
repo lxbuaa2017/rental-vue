@@ -157,6 +157,23 @@
                       :disabled="true">
                     </el-input>
                   </el-form-item>
+                  <div class="block">
+                    <span class="demonstration">选择入住时间</span>
+                    <el-date-picker
+                      v-model="ldate"
+                      type="date"
+                      placeholder="选择日期"
+                      value-format="yyyy-MM-dd"
+                    >
+                    </el-date-picker>
+                  </div>
+                  <el-row>
+                    <br>
+                    <br>
+                    <el-col>选择租住月数</el-col>
+                    <br>
+                    <el-col><el-input-number v-model="month_num" :min="1" :max="240" placeholder="租住月数"></el-input-number></el-col>
+                  </el-row>
                 </el-form>
                 <div slot="footer" class="dialog-footer">
                   <el-button @click="SdialogFormVisible5 = false">取 消</el-button>
@@ -228,6 +245,23 @@
                       :disabled="true">
                     </el-input>
                   </el-form-item>
+                  <div class="block">
+                    <span class="demonstration">选择入住时间</span>
+                    <el-date-picker
+                      v-model="ldate"
+                      type="date"
+                      placeholder="选择日期"
+                      value-format="yyyy-MM-dd"
+                    >
+                    </el-date-picker>
+                  </div>
+                  <el-row>
+                    <br>
+                    <br>
+                    <el-col>选择租住月数</el-col>
+                    <br>
+                    <el-col><el-input-number v-model="month_num" :min="1" :max="240" placeholder="租住月数"></el-input-number></el-col>
+                  </el-row>
                 </el-form>
                 <div slot="footer" class="dialog-footer">
                   <el-button @click="SdialogFormVisible6 = false">取 消</el-button>
