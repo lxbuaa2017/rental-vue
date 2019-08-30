@@ -129,7 +129,6 @@ export default {
         this.showTishi = true
       } else {
         let data = {'username': this.username, 'password': this.password}
-
         this.$axios.post('/api/login', data).then((res) => {
           console.log(res)
           if (res.data === 0) {

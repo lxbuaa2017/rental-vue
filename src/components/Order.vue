@@ -11,13 +11,13 @@
           <div class="orderShow">
             <el-row>
               <el-card :body-style="{ padding: '0px' }" shadow="hover">
-                <img :src=list.image class="image">
+                <img :src=list.room class="image">
                 <div class="label">
                   <div style="padding: 5px">
-                    <el-link :underline="false" style="font-size: 16px">{{list.title}}</el-link>
-                    <time class="time">{{list.time}}</time>
+                    <el-link :underline="false" style="font-size: 16px">{{list.room.address}}（{{list.state}}）</el-link>
+                    <time class="time">{{list.createdTime}}</time>
                   </div>
-                  <div class="position">{{list.address}}</div>
+                  <div class="position">{{list.room.type}}&nbsp;{{list.room.rentType}}</div>
                   <div class="buttongroup">
                     <el-button class="button" type="primary" v-on:click="view(list.id)">查看</el-button>
                     <el-button class="button" type="warning" plain v-on:click="repair(list.id)">报修</el-button>
@@ -86,22 +86,32 @@
 </style>
 
 <script>
+import {getCookie} from '../assets/js/cookie.js'
 export default {
   data () {
     return {
       name: 'OrderView',
       id: 1,
-      count: 0,
       total: 0,
-      loading: false,
-      currentDate: new Date(),
-      lists: []
+      count: 0,
+      lists: [],
+      orders: []
     }
   },
   mounted () {
     // get total here
-    this.$axios.get('/api/getOrderTotal', {withCredentials: true}).then((res) => {
-      this.total = res
+    let data = {'username': getCookie('username')}
+    this.$axios.post('/api/getOrderTotal', data).then((res) => {
+      console.log(res)
+      this.total = res.data
+    })
+    this.$axios.post('/api/getAllOrder', data).then((res) => {
+      console.log(res)
+      for (let i = 0; i < this.total; i++) {
+        this.orders = res.data
+      }
+      console.log('order')
+      console.log(this.orders)
     })
   },
   computed: {
@@ -116,22 +126,23 @@ export default {
     load () {
       this.loading = true
       setTimeout(() => {
-        // get order information here
         for (let i = 0; i < 10; i++) {
           if (this.count >= this.total) {
             break
           }
+          // get order information here
           this.lists.push({
-            id: this.id,
-            image: 'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png',
-            title: '测试数据' + this.id++,
-            time: '2019年8月25日 10:51',
-            address: '北京市海淀区学院路37号'
+            'orderid': this.orders[this.count].object.id,
+            'roomid': this.orders[this.count].object.room.roomId,
+            'renttype': this.orders[this.count].type,
+            'roomtype': this.orders[this.count].object.room.type
           })
           this.count++
         }
         this.loading = false
       }, 2000)
+      console.log('list')
+      console.log(this.lists)
     },
     view (id) {
       alert('Clicked \'view\' on room id ' + id)
