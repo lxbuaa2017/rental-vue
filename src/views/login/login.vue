@@ -129,9 +129,7 @@ export default {
         this.showTishi = true
       } else {
         let data = {'username': this.username, 'password': this.password}
-
         this.$axios.post('/api/login', data).then((res) => {
-        this.$axios.post('http://localhost:8081/login', data).then((res) => {
           console.log(res)
           if (res.data === 0) {
             this.tishi = '用户名或密码错误'
@@ -166,8 +164,8 @@ export default {
         this.showTishi = false
         let data = {'phone': this.phone}
         this.$axios.post('/api/sendSms', data, {withCredentials: true}).then((res) => {
-        this.btnText = '正在发送...'
-        this.isDisabled = true
+          this.btnText = '正在发送...'
+          this.isDisabled = true
           console.log(res)
           if (res.data === true) {
             this.timer()
