@@ -7,7 +7,7 @@
         v-infinite-scroll="load"
         infinite-scroll-disabled="disabled"
         style="list-style-type: none;padding-inline-start: 0px">
-        <li v-for="(complain) in complains" v-bind:key="complain.id">
+        <li v-for="complaint in complaints" v-bind:key="complaint.id">
           <div class="orderComplain">
             <el-row>
               <el-card :body-style="{ padding: '50px' }" shadow="hover">
@@ -15,25 +15,26 @@
                   <div style="padding: 5px">
                     <el-row :gutter="12">
                       <el-col :span="8">
-                        <time class="time">{{complain.createdTime}}</time>
+                        <time class="time">{{complaint.createdTime}}</time>
                       </el-col>
                       <el-col :span="8">
                         <el-card shadow="always">
-                          给您的答复：{{reply}}
+                          给您的答复：{{complaint.reply}}
                         </el-card>
                       </el-col>
                       <el-col :span="8">
                         <el-row>
                           <el-col>
-                            <div>{{complain.message}}</div>
+                            <div>{{complaint.message}}</div>
                           </el-col >
-                          <el-col>
-                            <el-image
-                              style="width: 100px; height: 100px;text-align: right"
-                              :src="urls[0]"
-                              :preview-src-list="srcList">
-                            </el-image>
-                          </el-col>
+<!--                          <el-col>-->
+<!--                            <el-image-->
+<!--                              v-show="complaint.urls!=null&&complaint.urls.length>0"-->
+<!--                              style="width: 100px; height: 100px;text-align: right"-->
+<!--                              :src="complaint.urls[0]"-->
+<!--                              :preview-src-list="srcList">-->
+<!--                            </el-image>-->
+<!--                          </el-col>-->
                         </el-row>
                       </el-col>
                     </el-row>
@@ -51,53 +52,28 @@
 </template>
 
 <script>
+import {getCookie} from '../assets/js/cookie.js'
 export default {
   name: 'Reply',
   data () {
     return {
+      username: '',
+      complaints: [],
       reply: '您好！已经解决了！',
       urls: [
         'http://icon.nipic.com/BannerPic/20160426/photo/20160426160807.jpg',
         'http://icon.nipic.com/BannerPic/20160426/photo/20160426160826.jpg'
-      ],
-      complains: [
-        {
-          'id': 1,
-          'message': '这不好那不好',
-          'createdTime': '2019-8-29',
-          'TenantUsername': '某某'
-
-        },
-        {
-          'id': 2,
-          'message': '这不好那不好',
-          'createdTime': '2019-8-29',
-          'TenantUsername': '某某'
-
-        },
-        {
-          'id': 3,
-          'message': '这不好那不好',
-          'createdTime': '2019-8-29',
-          'TenantUsername': '某某'
-
-        },
-        {
-          'id': 4,
-          'message': '这不好那不好',
-          'createdTime': '2019-8-29',
-          'TenantUsername': '某某'
-
-        },
-        {
-          'id': 5,
-          'message': '这不好那不好',
-          'createdTime': '2019-8-29',
-          'TenantUsername': '某某'
-
-        }
       ]
     }
+  },
+  mounted () {
+    this.username = getCookie('username')
+    var self = this
+    this.$axios.post('/api/complaints/getRepliedComplaints', this.qs.stringify({
+      'username': this.username
+    })).then((res) => {
+      self.complaints = res.data
+    })
   }
 }
 </script>

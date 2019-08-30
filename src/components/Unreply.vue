@@ -16,7 +16,7 @@
           style="text-align: left"
           list-type="picture-card"
           :http-request="uploadImgs"
-          action="api/file/uploadImage"
+          action="/api/file/uploadImage"
           :file="file"
           :file-list="fileList"
           :on-preview="handlePictureCardPreview"
@@ -56,12 +56,16 @@
                           <el-col>
                             <div>{{complain.message}}</div>
                           </el-col >
-                          <el-col>
-                              <el-image
-                                style="width: 100px; height: 100px;text-align: right"
-                                :src="urls[0]"
-                                :preview-src-list="srcList">
-                              </el-image>
+                          <el-col v-if="complain.urls!=null&&complain.urls.length>0">
+                            <el-row :gutter="10" style="text-align: right;float:right" v-for="url in complain.urls" v-bind:key="url">
+                              <el-col style="text-align: right;display: inline-block" :span="6">
+                                <el-image
+                                  style="width: 100px; height: 100px;text-align: right"
+                                  :src="url"
+                                  :preview-src-list="srcList">
+                                </el-image>
+                              </el-col>
+                            </el-row>
                           </el-col>
                         </el-row>
                       </el-col>
@@ -106,10 +110,12 @@ export default {
   },
   mounted () {
     this.username = getCookie('username')
+    var self = this
     this.$axios.post('/api/complaints/getTenantComplaints', this.qs.stringify({
       'username': this.username
     })).then((res) => {
-      this.complains = res.data
+      self.complains = res.data
+      self.urls = self.complains.urls
     })
   },
   methods: {
@@ -118,7 +124,7 @@ export default {
       param.append('file', file.file)
       this.$axios({
         method: 'post',
-        url: 'api/file/uploadImage',
+        url: '/api/file/uploadImage',
         headers: {
           'Content-Type': 'multipart/form-data'
         },
