@@ -22,7 +22,7 @@
                 style="list-style: none"
             >
               <Room v-if="room1.type==='单人间'" :room="room1" @click.native="room0(room1)"></Room>
-              <el-dialog  title="请填写短租申请信息" :visible.sync="SdialogFormVisible1">
+               <el-dialog :modal-append-to-body='false'  title="请填写短租申请信息" :visible.sync="SdialogFormVisible1">
                 <el-form :model="form">
                   <el-form-item label="姓名" :label-width="formLabelWidth">
                     <el-input v-model="username" autocomplete="off"></el-input>
@@ -54,7 +54,7 @@
                   <el-button type="primary" @click="commitShortRent()">确 定</el-button>
                 </div>
               </el-dialog>
-              <el-dialog  title="请填写长租申请信息" :visible.sync="SdialogFormVisible4">
+               <el-dialog :modal-append-to-body='false'  title="请填写长租申请信息" :visible.sync="SdialogFormVisible4">
                 <el-form :model="form">
                   <el-form-item label="姓名" :label-width="formLabelWidth">
                     <el-input v-model="username" autocomplete="off"></el-input>
@@ -110,7 +110,7 @@
                 style="list-style: none"
             >
               <Room v-if="room1.type==='双人间'" :room="room1" @click.native="room2(room1)"></Room>
-              <el-dialog title="请填写短租申请信息" :visible.sync="SdialogFormVisible2">
+               <el-dialog :modal-append-to-body='false' title="请填写短租申请信息" :visible.sync="SdialogFormVisible2">
                 <el-form :model="form">
                   <el-form-item label="姓名" :label-width="formLabelWidth">
                     <el-input v-model="username" autocomplete="off"></el-input>
@@ -142,7 +142,7 @@
                   <el-button type="primary" @click="commitShortRent()">确 定</el-button>
                 </div>
               </el-dialog>
-              <el-dialog  title="请填写长租申请信息" :visible.sync="SdialogFormVisible5">
+               <el-dialog :modal-append-to-body='false'  title="请填写长租申请信息" :visible.sync="SdialogFormVisible5">
                 <el-form :model="form">
                   <el-form-item label="姓名" :label-width="formLabelWidth">
                     <el-input v-model="username" autocomplete="off"></el-input>
@@ -198,7 +198,7 @@
                 style="list-style: none"
             >
               <Room v-if="room1.type==='四人间'" :room="room1" @click.native="room3(room1)"></Room>
-              <el-dialog title="请填写短租申请信息" :visible.sync="SdialogFormVisible3">
+               <el-dialog :modal-append-to-body='false' title="请填写短租申请信息" :visible.sync="SdialogFormVisible3">
                 <el-form :model="form">
                   <el-form-item label="姓名" :label-width="formLabelWidth">
                     <el-input v-model="username" autocomplete="off"></el-input>
@@ -230,7 +230,7 @@
                   <el-button type="primary" @click="commitShortRent()">确 定</el-button>
                 </div>
               </el-dialog>
-              <el-dialog  title="请填写长租申请信息" :visible.sync="SdialogFormVisible6">
+               <el-dialog :modal-append-to-body='false'  title="请填写长租申请信息" :visible.sync="SdialogFormVisible6">
                 <el-form :model="form">
                   <el-form-item label="姓名" :label-width="formLabelWidth">
                     <el-input v-model="username" autocomplete="off"></el-input>
