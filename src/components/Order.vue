@@ -19,9 +19,8 @@
                   </div>
                   <div class="position">{{list.roomtype}}&nbsp;&nbsp;{{list.renttype}}</div>
                   <div class="buttongroup">
-                    <el-button class="button" type="primary" v-on:click="view(list.orderid)">查看</el-button>
-                    <el-button class="button" type="warning" plain v-on:click="repair(list.orderid)">报修</el-button>
-                    <el-button class="button" type="success" plain v-on:click="charge(list.orderid)">续租</el-button>
+                    <el-button class="button" type="primary" @click="view(list.orderid)">查看</el-button>
+                    <el-button class="button" type="success" plain @click="charge(list.orderid)" :disabled=list.chargebuttondisabled>{{list.chargebutton}}</el-button>
                   </div>
                 </div>
               </el-card>
@@ -32,6 +31,12 @@
       <p v-if="loading" style="color: #2c3e50">加载中...</p>
       <p v-if="noMore" style="color: #2c3e50">没有更多了</p>
     </div>
+    <el-dialog
+      title="提示"
+      :visible.sync="viewDialogVisible"
+      width="30%">
+      <span>test</span>
+    </el-dialog>
   </div>
 </template>
 
@@ -91,11 +96,13 @@ export default {
   data () {
     return {
       name: 'OrderView',
+      loading: false,
       id: 1,
       total: 0,
       count: 0,
       lists: [],
-      orders: []
+      orders: [],
+      viewDialogVisible: false
     }
   },
   mounted () {
@@ -129,21 +136,33 @@ export default {
           }
           // get order information here
           let status = ''
+          let chargebutton = ''
+          let chargebuttondisabled = true
           switch (this.orders[this.count].object.state) {
             case 1823:
               status = '待审核'
+              chargebutton = '付款'
+              chargebuttondisabled = true
               break
             case 1824:
               status = '待支付'
+              chargebutton = '付款'
+              chargebuttondisabled = true
               break
             case 1825:
               status = '款项待确认'
+              chargebutton = '续租'
+              chargebuttondisabled = true
               break
             case 1826:
               status = '在住'
+              chargebutton = '续租'
+              chargebuttondisabled = false
               break
             case 1827:
               status = '续租待确认'
+              chargebutton = '续租'
+              chargebuttondisabled = true
               break
           }
           let detailpage = '/detail/' + this.orders[this.count].object.room.roomId
@@ -158,7 +177,9 @@ export default {
             'createdtime': this.orders[this.count].object.createdTime,
             'checkinday': this.orders[this.count].object.checkInDay,
             'leaveday': this.orders[this.count].object.leaveDay,
-            'detailpage': detailpage
+            'detailpage': detailpage,
+            'chargebutton': chargebutton,
+            'chargebuttondisabled': chargebuttondisabled
           })
           this.count++
         }
@@ -168,10 +189,7 @@ export default {
       console.log(this.lists)
     },
     view (id) {
-      alert('Clicked \'view\' on room id ' + id)
-    },
-    repair (id) {
-      alert('Clicked \'repair\' on room id ' + id)
+      this.viewDialogVisible = true
     },
     charge (id) {
       alert('Clicked \'charge\' on room id ' + id)
