@@ -105,13 +105,15 @@ export default {
       console.log(res)
       this.total = res.data
     })
+    var self = this
     this.$axios.post('/api/getAllOrder', data).then((res) => {
-      console.log(res)
-      for (let i = 0; i < this.total; i++) {
-        this.orders = res.data
-      }
-      console.log('order')
-      console.log(this.orders)
+      // console.log(res)
+      // for (let i = 0; i < this.total; i++) {
+      //   this.orders = res.data
+      // }
+      // console.log('order')
+      // console.log(this.orders)
+      self.lists = res.data
     })
   },
   computed: {
