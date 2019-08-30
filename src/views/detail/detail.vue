@@ -21,7 +21,7 @@
           <p>状态：{{this.data.state}}</p>
           <p>人数：{{this.data.type}}</p>
           <p>出租类型：{{this.data.renttype}}</p>
-          <p>面积：{{this.data.area}}</p>
+          <p>面积：{{this.data.area}} 平方米</p>
           <p>价格：{{this.data.price}}</p>
           <p>房主：{{this.data.landlord}}</p>
           <p>联系方式：{{this.data.phone}}</p>
