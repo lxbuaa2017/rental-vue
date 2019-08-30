@@ -27,14 +27,17 @@
                           <el-col>
                             <div>{{complaint.message}}</div>
                           </el-col >
-<!--                          <el-col>-->
-<!--                            <el-image-->
-<!--                              v-show="complaint.urls!=null&&complaint.urls.length>0"-->
-<!--                              style="width: 100px; height: 100px;text-align: right"-->
-<!--                              :src="complaint.urls[0]"-->
-<!--                              :preview-src-list="srcList">-->
-<!--                            </el-image>-->
-<!--                          </el-col>-->
+                          <el-col v-if="complaint.urls!=null&&complaint.urls.length>0">
+                            <el-row :gutter="10" style="text-align: right;float:right" v-for="url in complaint.urls" v-bind:key="url">
+                              <el-col style="text-align: right;display: inline-block" :span="6">
+                                <el-image
+                                  style="width: 100px; height: 100px;text-align: right"
+                                  :src="url"
+                                  :preview-src-list="srcList">
+                                </el-image>
+                              </el-col>
+                            </el-row>
+                          </el-col>
                         </el-row>
                       </el-col>
                     </el-row>

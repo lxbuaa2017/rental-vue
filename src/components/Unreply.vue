@@ -93,10 +93,7 @@ export default {
       fileList: [],
       text: '',
       username: '',
-      urls: [
-        'http://icon.nipic.com/BannerPic/20160426/photo/20160426160807.jpg',
-        'http://icon.nipic.com/BannerPic/20160426/photo/20160426160826.jpg'
-      ],
+      urls: [],
       dialogImageUrl: '',
       dialogVisible: false,
       SdialogFormVisible: false,
@@ -115,7 +112,7 @@ export default {
       'username': this.username
     })).then((res) => {
       self.complains = res.data
-      self.urls = self.complains.urls
+      // self.urls = self.complains.urls
     })
   },
   methods: {
