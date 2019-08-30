@@ -22,76 +22,6 @@
                 style="list-style: none"
             >
               <Room v-if="room1.type==='单人间'" :room="room1" @click.native="room0(room1)"></Room>
-               <el-dialog :modal-append-to-body='false'  title="请填写短租申请信息" :visible.sync="SdialogFormVisible1">
-                <el-form :model="form">
-                  <el-form-item label="姓名" :label-width="formLabelWidth">
-                    <el-input v-model="username" autocomplete="off"></el-input>
-                  </el-form-item>
-                  <el-form-item label="身份证" :label-width="formLabelWidth">
-                    <el-input v-model="RentOrder.tenantId" autocomplete="off"></el-input>
-                  </el-form-item>
-                  <el-form-item label="房源" :label-width="formLabelWidth">
-                    <el-input
-                      placeholder="房源地址"
-                      v-model="rent_room.address"
-                      :disabled="true">
-                    </el-input>
-                  </el-form-item>
-                  <el-form-item label="租住时间" :label-width="formLabelWidth">
-                    <el-date-picker
-                      v-model="dates"
-                      type="daterange"
-                      range-separator="至"
-                      start-placeholder="下午入住"
-                      end-placeholder="上午离开"
-                      value-format="yyyy-MM-dd"
-                    >
-                    </el-date-picker>
-                  </el-form-item>
-                </el-form>
-                <div slot="footer" class="dialog-footer">
-                  <el-button @click="SdialogFormVisible1 = false">取 消</el-button>
-                  <el-button type="primary" @click="commitShortRent()">确 定</el-button>
-                </div>
-              </el-dialog>
-               <el-dialog :modal-append-to-body='false'  title="请填写长租申请信息" :visible.sync="SdialogFormVisible4">
-                <el-form :model="form">
-                  <el-form-item label="姓名" :label-width="formLabelWidth">
-                    <el-input v-model="username" autocomplete="off"></el-input>
-                  </el-form-item>
-                  <el-form-item label="身份证" :label-width="formLabelWidth">
-                    <el-input v-model="RentOrder.tenantId" autocomplete="off"></el-input>
-                  </el-form-item>
-                  <el-form-item label="房源" :label-width="formLabelWidth">
-                    <el-input
-                      placeholder="房源地址"
-                      v-model="rent_room.address"
-                      :disabled="true">
-                    </el-input>
-                  </el-form-item>
-                  <div class="block">
-                    <span class="demonstration">选择入住时间</span>
-                    <el-date-picker
-                      v-model="ldate"
-                      type="date"
-                      placeholder="选择日期"
-                      value-format="yyyy-MM-dd"
-                    >
-                    </el-date-picker>
-                  </div>
-                  <el-row>
-                    <br>
-                    <br>
-                    <el-col>选择租住月数</el-col>
-                    <br>
-                    <el-col><el-input-number v-model="month_num" :min="1" :max="240" placeholder="租住月数"></el-input-number></el-col>
-                  </el-row>
-                </el-form>
-                <div slot="footer" class="dialog-footer">
-                  <el-button @click="SdialogFormVisible4 = false">取 消</el-button>
-                  <el-button type="primary" @click="commitLongRent()">确 定</el-button>
-                </div>
-              </el-dialog>
             </li>
           </ul>
           <p v-if="loading">加载中...</p>
@@ -110,76 +40,6 @@
                 style="list-style: none"
             >
               <Room v-if="room1.type==='双人间'" :room="room1" @click.native="room2(room1)"></Room>
-               <el-dialog :modal-append-to-body='false' title="请填写短租申请信息" :visible.sync="SdialogFormVisible2">
-                <el-form :model="form">
-                  <el-form-item label="姓名" :label-width="formLabelWidth">
-                    <el-input v-model="username" autocomplete="off"></el-input>
-                  </el-form-item>
-                  <el-form-item label="身份证" :label-width="formLabelWidth">
-                    <el-input v-model="RentOrder.tenantId" autocomplete="off"></el-input>
-                  </el-form-item>
-                  <el-form-item label="房源" :label-width="formLabelWidth">
-                    <el-input
-                      placeholder="房源地址"
-                      v-model="rent_room.address"
-                      :disabled="true">
-                    </el-input>
-                  </el-form-item>
-                  <el-form-item label="租住时间" :label-width="formLabelWidth">
-                    <el-date-picker
-                      v-model="dates"
-                      type="daterange"
-                      range-separator="至"
-                      start-placeholder="下午入住"
-                      end-placeholder="上午离开"
-                      value-format="yyyy-MM-dd"
-                    >
-                    </el-date-picker>
-                  </el-form-item>
-                </el-form>
-                <div slot="footer" class="dialog-footer">
-                  <el-button @click="SdialogFormVisible2 = false">取 消</el-button>
-                  <el-button type="primary" @click="commitShortRent()">确 定</el-button>
-                </div>
-              </el-dialog>
-               <el-dialog :modal-append-to-body='false'  title="请填写长租申请信息" :visible.sync="SdialogFormVisible5">
-                <el-form :model="form">
-                  <el-form-item label="姓名" :label-width="formLabelWidth">
-                    <el-input v-model="username" autocomplete="off"></el-input>
-                  </el-form-item>
-                  <el-form-item label="身份证" :label-width="formLabelWidth">
-                    <el-input v-model="RentOrder.tenantId" autocomplete="off"></el-input>
-                  </el-form-item>
-                  <el-form-item label="房源" :label-width="formLabelWidth">
-                    <el-input
-                      placeholder="房源地址"
-                      v-model="rent_room.address"
-                      :disabled="true">
-                    </el-input>
-                  </el-form-item>
-                  <div class="block">
-                    <span class="demonstration">选择入住时间</span>
-                    <el-date-picker
-                      v-model="ldate"
-                      type="date"
-                      placeholder="选择日期"
-                      value-format="yyyy-MM-dd"
-                    >
-                    </el-date-picker>
-                  </div>
-                  <el-row>
-                    <br>
-                    <br>
-                    <el-col>选择租住月数</el-col>
-                    <br>
-                    <el-col><el-input-number v-model="month_num" :min="1" :max="240" placeholder="租住月数"></el-input-number></el-col>
-                  </el-row>
-                </el-form>
-                <div slot="footer" class="dialog-footer">
-                  <el-button @click="SdialogFormVisible5 = false">取 消</el-button>
-                  <el-button type="primary" @click="commitLongRent()">确 定</el-button>
-                </div>
-              </el-dialog>
             </li>
           </ul>
           <p v-if="loading">加载中...</p>
@@ -198,76 +58,6 @@
                 style="list-style: none"
             >
               <Room v-if="room1.type==='四人间'" :room="room1" @click.native="room3(room1)"></Room>
-               <el-dialog :modal-append-to-body='false' title="请填写短租申请信息" :visible.sync="SdialogFormVisible3">
-                <el-form :model="form">
-                  <el-form-item label="姓名" :label-width="formLabelWidth">
-                    <el-input v-model="username" autocomplete="off"></el-input>
-                  </el-form-item>
-                  <el-form-item label="身份证" :label-width="formLabelWidth">
-                    <el-input v-model="RentOrder.tenantId" autocomplete="off"></el-input>
-                  </el-form-item>
-                  <el-form-item label="房源" :label-width="formLabelWidth">
-                    <el-input
-                      placeholder="房源地址"
-                      v-model="rent_room.address"
-                      :disabled="true">
-                    </el-input>
-                  </el-form-item>
-                  <el-form-item label="租住时间" :label-width="formLabelWidth">
-                    <el-date-picker
-                      v-model="dates"
-                      type="daterange"
-                      range-separator="至"
-                      start-placeholder="下午入住"
-                      end-placeholder="上午离开"
-                      value-format="yyyy-MM-dd"
-                    >
-                    </el-date-picker>
-                  </el-form-item>
-                </el-form>
-                <div slot="footer" class="dialog-footer">
-                  <el-button @click="SdialogFormVisible3 = false">取 消</el-button>
-                  <el-button type="primary" @click="commitShortRent()">确 定</el-button>
-                </div>
-              </el-dialog>
-               <el-dialog :modal-append-to-body='false'  title="请填写长租申请信息" :visible.sync="SdialogFormVisible6">
-                <el-form :model="form">
-                  <el-form-item label="姓名" :label-width="formLabelWidth">
-                    <el-input v-model="username" autocomplete="off"></el-input>
-                  </el-form-item>
-                  <el-form-item label="身份证" :label-width="formLabelWidth">
-                    <el-input v-model="RentOrder.tenantId" autocomplete="off"></el-input>
-                  </el-form-item>
-                  <el-form-item label="房源" :label-width="formLabelWidth">
-                    <el-input
-                      placeholder="房源地址"
-                      v-model="rent_room.address"
-                      :disabled="true">
-                    </el-input>
-                  </el-form-item>
-                  <div class="block">
-                    <span class="demonstration">选择入住时间</span>
-                    <el-date-picker
-                      v-model="ldate"
-                      type="date"
-                      placeholder="选择日期"
-                      value-format="yyyy-MM-dd"
-                    >
-                    </el-date-picker>
-                  </div>
-                  <el-row>
-                    <br>
-                    <br>
-                    <el-col>选择租住月数</el-col>
-                    <br>
-                    <el-col><el-input-number v-model="month_num" :min="1" :max="240" placeholder="租住月数"></el-input-number></el-col>
-                  </el-row>
-                </el-form>
-                <div slot="footer" class="dialog-footer">
-                  <el-button @click="SdialogFormVisible6 = false">取 消</el-button>
-                  <el-button type="primary" @click="commitLongRent()">确 定</el-button>
-                </div>
-              </el-dialog>
             </li>
           </ul>
           <p v-if="loading">加载中...</p>
@@ -275,6 +65,216 @@
         </div>
       </el-tab-pane>
     </el-tabs>
+    <el-dialog :modal-append-to-body='false'  title="请填写短租申请信息" :visible.sync="SdialogFormVisible1">
+      <el-form :model="form">
+        <el-form-item label="姓名" :label-width="formLabelWidth">
+          <el-input v-model="username" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="身份证" :label-width="formLabelWidth">
+          <el-input v-model="RentOrder.tenantId" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="房源" :label-width="formLabelWidth">
+          <el-input
+            placeholder="房源地址"
+            v-model="rent_room.address"
+            :disabled="true">
+          </el-input>
+        </el-form-item>
+        <el-form-item label="租住时间" :label-width="formLabelWidth">
+          <el-date-picker
+            v-model="dates"
+            type="daterange"
+            range-separator="至"
+            start-placeholder="下午入住"
+            end-placeholder="上午离开"
+            value-format="yyyy-MM-dd"
+          >
+          </el-date-picker>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="SdialogFormVisible1 = false">取 消</el-button>
+        <el-button type="primary" @click="commitShortRent()">确 定</el-button>
+      </div>
+    </el-dialog>
+    <el-dialog :modal-append-to-body='false'  title="请填写长租申请信息" :visible.sync="SdialogFormVisible4">
+      <el-form :model="form">
+        <el-form-item label="姓名" :label-width="formLabelWidth">
+          <el-input v-model="username" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="身份证" :label-width="formLabelWidth">
+          <el-input v-model="RentOrder.tenantId" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="房源" :label-width="formLabelWidth">
+          <el-input
+            placeholder="房源地址"
+            v-model="rent_room.address"
+            :disabled="true">
+          </el-input>
+        </el-form-item>
+        <div class="block">
+          <span class="demonstration">选择入住时间</span>
+          <el-date-picker
+            v-model="ldate"
+            type="date"
+            placeholder="选择日期"
+            value-format="yyyy-MM-dd"
+          >
+          </el-date-picker>
+        </div>
+        <el-row>
+          <br>
+          <br>
+          <el-col>选择租住月数</el-col>
+          <br>
+          <el-col><el-input-number v-model="month_num" :min="1" :max="240" placeholder="租住月数"></el-input-number></el-col>
+        </el-row>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="SdialogFormVisible4 = false">取 消</el-button>
+        <el-button type="primary" @click="commitLongRent()">确 定</el-button>
+      </div>
+    </el-dialog>
+    <el-dialog :modal-append-to-body='false' title="请填写短租申请信息" :visible.sync="SdialogFormVisible2">
+      <el-form :model="form">
+        <el-form-item label="姓名" :label-width="formLabelWidth">
+          <el-input v-model="username" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="身份证" :label-width="formLabelWidth">
+          <el-input v-model="RentOrder.tenantId" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="房源" :label-width="formLabelWidth">
+          <el-input
+            placeholder="房源地址"
+            v-model="rent_room.address"
+            :disabled="true">
+          </el-input>
+        </el-form-item>
+        <el-form-item label="租住时间" :label-width="formLabelWidth">
+          <el-date-picker
+            v-model="dates"
+            type="daterange"
+            range-separator="至"
+            start-placeholder="下午入住"
+            end-placeholder="上午离开"
+            value-format="yyyy-MM-dd"
+          >
+          </el-date-picker>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="SdialogFormVisible2 = false">取 消</el-button>
+        <el-button type="primary" @click="commitShortRent()">确 定</el-button>
+      </div>
+    </el-dialog>
+    <el-dialog :modal-append-to-body='false'  title="请填写长租申请信息" :visible.sync="SdialogFormVisible5">
+      <el-form :model="form">
+        <el-form-item label="姓名" :label-width="formLabelWidth">
+          <el-input v-model="username" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="身份证" :label-width="formLabelWidth">
+          <el-input v-model="RentOrder.tenantId" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="房源" :label-width="formLabelWidth">
+          <el-input
+            placeholder="房源地址"
+            v-model="rent_room.address"
+            :disabled="true">
+          </el-input>
+        </el-form-item>
+        <div class="block">
+          <span class="demonstration">选择入住时间</span>
+          <el-date-picker
+            v-model="ldate"
+            type="date"
+            placeholder="选择日期"
+            value-format="yyyy-MM-dd"
+          >
+          </el-date-picker>
+        </div>
+        <el-row>
+          <br>
+          <br>
+          <el-col>选择租住月数</el-col>
+          <br>
+          <el-col><el-input-number v-model="month_num" :min="1" :max="240" placeholder="租住月数"></el-input-number></el-col>
+        </el-row>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="SdialogFormVisible5 = false">取 消</el-button>
+        <el-button type="primary" @click="commitLongRent()">确 定</el-button>
+      </div>
+    </el-dialog>
+    <el-dialog :modal-append-to-body='false' title="请填写短租申请信息" :visible.sync="SdialogFormVisible3">
+      <el-form :model="form">
+        <el-form-item label="姓名" :label-width="formLabelWidth">
+          <el-input v-model="username" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="身份证" :label-width="formLabelWidth">
+          <el-input v-model="RentOrder.tenantId" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="房源" :label-width="formLabelWidth">
+          <el-input
+            placeholder="房源地址"
+            v-model="rent_room.address"
+            :disabled="true">
+          </el-input>
+        </el-form-item>
+        <el-form-item label="租住时间" :label-width="formLabelWidth">
+          <el-date-picker
+            v-model="dates"
+            type="daterange"
+            range-separator="至"
+            start-placeholder="下午入住"
+            end-placeholder="上午离开"
+            value-format="yyyy-MM-dd"
+          >
+          </el-date-picker>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="SdialogFormVisible3 = false">取 消</el-button>
+        <el-button type="primary" @click="commitShortRent()">确 定</el-button>
+      </div>
+    </el-dialog>
+    <el-dialog :modal-append-to-body='false'  title="请填写长租申请信息" :visible.sync="SdialogFormVisible6">
+      <el-form :model="form">
+        <el-form-item label="姓名" :label-width="formLabelWidth">
+          <el-input v-model="username" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="身份证" :label-width="formLabelWidth">
+          <el-input v-model="RentOrder.tenantId" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="房源" :label-width="formLabelWidth">
+          <el-input
+            placeholder="房源地址"
+            v-model="rent_room.address"
+            :disabled="true">
+          </el-input>
+        </el-form-item>
+        <div class="block">
+          <span class="demonstration">选择入住时间</span>
+          <el-date-picker
+            v-model="ldate"
+            type="date"
+            placeholder="选择日期"
+            value-format="yyyy-MM-dd"
+          >
+          </el-date-picker>
+        </div>
+        <el-row>
+          <br>
+          <br>
+          <el-col>选择租住月数</el-col>
+          <br>
+          <el-col><el-input-number v-model="month_num" :min="1" :max="240" placeholder="租住月数"></el-input-number></el-col>
+        </el-row>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="SdialogFormVisible6 = false">取 消</el-button>
+        <el-button type="primary" @click="commitLongRent()">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
