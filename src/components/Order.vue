@@ -101,19 +101,14 @@ export default {
   mounted () {
     // get total here
     let data = {'username': getCookie('username')}
+    let self = this
     this.$axios.post('/api/getOrderTotal', data).then((res) => {
       console.log(res)
-      this.total = res.data
+      self.total = res.data
     })
-    var self = this
     this.$axios.post('/api/getAllOrder', data).then((res) => {
-      // console.log(res)
-      // for (let i = 0; i < this.total; i++) {
-      //   this.orders = res.data
-      // }
-      // console.log('order')
-      // console.log(this.orders)
-      self.lists = res.data
+      console.log(res)
+      self.orders = res.data
     })
   },
   computed: {

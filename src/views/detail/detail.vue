@@ -15,13 +15,16 @@
             </el-carousel-item>
           </el-carousel>
         </div>
-        <div style="display: inline-block;text-align: left;width: fit-content;max-width: 30%;padding-left: 50px;vertical-align: top">
-          <h1>房子名</h1>
-          <p>位置</p>
-          <p>几人间</p>
-          <p>长租短租，还有价钱</p>
-          <p>该联系谁去看房子</p>
-          <p>一个超级他妈长的p块，写这个玩意就是为了看看我这个描述div到底能有多宽，看看p块能不能自动换行</p>
+        <div
+          style="display: inline-block;text-align: left;width: fit-content;max-width: 30%;padding-left: 50px;vertical-align: top">
+          <h1>{{this.data.address}}</h1>
+          <p>状态：{{this.data.state}}</p>
+          <p>人数：{{this.data.type}}</p>
+          <p>出租类型：{{this.data.renttype}}</p>
+          <p>面积：{{this.data.area}}</p>
+          <p>价格：{{this.data.price}}</p>
+          <p>房主：{{this.data.landlord}}</p>
+          <p>联系方式：{{this.data.phone}}</p>
         </div>
       </div>
     </el-main>
@@ -33,19 +36,51 @@ export default {
   name: 'detail',
   data () {
     return {
-      data: []
+      data: {}
     }
   },
   mounted () {
     // get detail here
-    this.$axios.post('/api/room/findById', this.qs.stringify({id: this.$route.params.id})).then((res) => {
+    let self = this
+    this.$axios.get('/api/room/findById', 'id=' + this.$route.params.id).then((res) => {
       if (res.data.address === '') {
-        this.$route.push('/')
+        self.$route.push('/')
       } else {
-        this.data.push({
+        let state = ''
+        switch (res.data.state) {
+          case 2001:
+            state = '已租'
+            break
+          case 2002:
+            state = '未租'
+            break
+        }
+        let renttype = ''
+        let price = ''
+        switch (res.data.rentType) {
+          case 2004:
+            renttype = '长租'
+            price = res.data.priceForMonth.toString() + '/月'
+            break
+          case 2005:
+            renttype = '短租'
+            price = res.data.priceForDay.toString() + '/天'
+            break
+          case 2006:
+            renttype = '长租 / 短租'
+            price = '长租 ' + res.data.priceForMonth.toString() + '/月，短租 ' + res.data.priceForDay.toString() + '/天'
+            break
+        }
+        self.data = {
+          'address': res.data.address,
+          'state': state,
           'type': res.data.type,
-          'address': res.data.address
-        })
+          'renttype': renttype,
+          'area': res.data.area,
+          'price': price,
+          'landlord': res.data.lardLord.username,
+          'phone': res.data.landLord.phone
+        }
       }
     })
   }
