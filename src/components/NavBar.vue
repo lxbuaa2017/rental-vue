@@ -22,10 +22,6 @@
     width: auto;
   }
 
-  .el-header {
-    padding: 0;
-  }
-
 </style>
 
 <script>

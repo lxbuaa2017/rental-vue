@@ -1,6 +1,6 @@
 <template>
   <div id="main">
-    <img src="../../assets/logo.png">
+    <img src="../../assets/logo.png" style="width: 200px">
     <div class="login-wrap" v-show="showLogin">
       <h3>登录</h3>
       <p v-show="showTishi">{{tishi}}</p>
@@ -131,6 +131,7 @@ export default {
         let data = {'username': this.username, 'password': this.password}
 
         this.$axios.post('/api/login', data).then((res) => {
+        this.$axios.post('http://localhost:8081/login', data).then((res) => {
           console.log(res)
           if (res.data === 0) {
             this.tishi = '用户名或密码错误'
@@ -165,12 +166,16 @@ export default {
         this.showTishi = false
         let data = {'phone': this.phone}
         this.$axios.post('/api/sendSms', data, {withCredentials: true}).then((res) => {
+        this.btnText = '正在发送...'
+        this.isDisabled = true
           console.log(res)
           if (res.data === true) {
             this.timer()
           } else {
             this.tishi = '获取验证码失败'
             this.showTishi = true
+            this.btnText = '获取验证码'
+            this.isDisabled = false
           }
         })
       }

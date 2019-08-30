@@ -1,26 +1,22 @@
 <template>
   <div style="height: 100%">
     <el-container>
-      <el-header>
+      <el-header style="padding: 0">
         <nav-bar/>
       </el-header>
       <el-container style="padding-top: 3px">
         <el-aside width="200px">
           <nav-menu/>
         </el-aside>
-        <el-main style="height: inherit" id="main">
+        <el-main style="height: inherit;padding: 5px" id="main">
           <router-view/>
         </el-main>
       </el-container>
     </el-container>
-    <el-row><span>Copyright © 2019.All rights reserved.</span></el-row>
   </div>
 </template>
 
 <style scoped>
-  .el-main {
-    padding: 5px;
-  }
 
 </style>
 
