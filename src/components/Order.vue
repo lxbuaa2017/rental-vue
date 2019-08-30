@@ -1,6 +1,6 @@
 <template>
   <div class="order-wrap">
-    <h2 style="padding-left: 10px; text-align: left">当前订单</h2>
+    <h2 style="padding-left: 10px; text-align: left">订单管理</h2>
     <div class="infinite-list-wrapper" style="overflow:auto">
       <ul
         class="list"
@@ -14,7 +14,7 @@
                 <img :src=list.image class="image">
                 <div class="label">
                   <div style="padding: 5px">
-                    <el-link :underline="false" style="font-size: 16px">{{list.address}}（{{list.status}}）</el-link>
+                    <el-link :underline="false" style="font-size: 16px" :href=list.detailpage target="_blank">{{list.address}}（{{list.status}}）</el-link>
                     <time class="time">{{list.createdtime}}</time>
                   </div>
                   <div class="position">{{list.roomtype}}&nbsp;&nbsp;{{list.renttype}}</div>
@@ -137,9 +137,16 @@ export default {
               status = '待支付'
               break
             case 1825:
-              status = '已支付'
+              status = '款项待确认'
+              break
+            case 1826:
+              status = '在住'
+              break
+            case 1827:
+              status = '续租待确认'
               break
           }
+          let detailpage = '/detail/' + this.orders[this.count].object.room.roomId
           this.lists.push({
             'orderid': this.orders[this.count].object.id,
             'roomid': this.orders[this.count].object.room.roomId,
@@ -150,12 +157,13 @@ export default {
             'roomtype': this.orders[this.count].object.room.type,
             'createdtime': this.orders[this.count].object.createdTime,
             'checkinday': this.orders[this.count].object.checkInDay,
-            'leaveday': this.orders[this.count].object.leaveDay
+            'leaveday': this.orders[this.count].object.leaveDay,
+            'detailpage': detailpage
           })
           this.count++
         }
         this.loading = false
-      }, 2000)
+      }, 500)
       console.log('list')
       console.log(this.lists)
     },

@@ -11,16 +11,10 @@
           <i class="el-icon-location"></i>
           <span slot="title">租房</span>
         </el-menu-item>
-        <el-submenu index="2">
-          <template slot="title">
-            <i class="el-icon-document"></i>
-            <span>订单管理</span>
-          </template>
-          <el-menu-item-group>
-            <el-menu-item index="2-1" v-on:click="showOrder">当前订单</el-menu-item>
-            <el-menu-item index="2-2" v-on:click="showOrderHistory">历史订单</el-menu-item>
-          </el-menu-item-group>
-        </el-submenu>
+        <el-menu-item index="2" v-on:click="showOrder">
+          <i class="el-icon-document"></i>
+          <span slot="title">订单管理</span>
+        </el-menu-item>
         <el-submenu index="3">
           <template slot="title">
             <i class="el-icon-setting"></i>
