@@ -130,6 +130,7 @@ export default {
       } else {
         let data = {'username': this.username, 'password': this.password}
 
+        this.$axios.post('/api/login', data).then((res) => {
         this.$axios.post('http://localhost:8081/login', data).then((res) => {
           console.log(res)
           if (res.data === 0) {
@@ -164,9 +165,9 @@ export default {
       } else {
         this.showTishi = false
         let data = {'phone': this.phone}
+        this.$axios.post('/api/sendSms', data, {withCredentials: true}).then((res) => {
         this.btnText = '正在发送...'
         this.isDisabled = true
-        this.$axios.post('http://localhost:8081/sendSms', data, {withCredentials: true}).then((res) => {
           console.log(res)
           if (res.data === true) {
             this.timer()
@@ -219,7 +220,7 @@ export default {
         this.showTishi = true
       } else {
         let verify = {'code': this.authentication}
-        this.$axios.post('http://localhost:8081/verify', verify, {withCredentials: true}).then((res) => {
+        this.$axios.post('/api/verify', verify, {withCredentials: true}).then((res) => {
           console.log(res)
           if (res.data !== 1000) {
             this.tishi = '验证码错误'
@@ -234,7 +235,7 @@ export default {
               'isMale': this.isMale,
               'age': this.age
             }
-            this.$axios.post('http://localhost:8081/register', data).then((res) => {
+            this.$axios.post('/api/register', data).then((res) => {
               console.log(res)
               if (res.data === 1000) {
                 this.tishi = '注册成功'

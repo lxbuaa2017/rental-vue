@@ -31,6 +31,16 @@
             <el-menu-item index="3-2" v-on:click="showTicketHistory">历史记录</el-menu-item>
           </el-menu-item-group>
         </el-submenu>
+        <el-submenu index="4">
+          <template slot="title">
+            <i class="el-icon-s-custom"></i>
+            <span>投诉</span>
+          </template>
+          <el-menu-item-group>
+            <el-menu-item index="4-1" v-on:click="showUnreply">未回复</el-menu-item>
+            <el-menu-item index="4-2" v-on:click="showReply">已回复</el-menu-item>
+          </el-menu-item-group>
+        </el-submenu>
       </el-menu>
     </el-col>
   </el-row>
@@ -62,11 +72,11 @@ export default {
     showOrderHistory () {
       this.$router.push('/orderhistory')
     },
-    showTicket () {
-      this.$router.push('/ticket')
+    showUnreply () {
+      this.$router.push('/unreply')
     },
-    showTicketHistory () {
-      this.$router.push('/tickethistory')
+    showReply () {
+      this.$router.push('/reply')
     }
   }
 }

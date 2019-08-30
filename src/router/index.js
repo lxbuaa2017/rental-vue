@@ -21,7 +21,8 @@ import ReplyComplaint from '@/components/ReplyComplaint.vue'
 import Processed from '@/components/Processed.vue'
 import Unprocessed from '@/components/Unprocessed.vue'
 import VueResource from 'vue-resource'
-
+import Unreply from '../components/Unreply'
+import Reply from '../components/Reply'
 Vue.use(Router)
 Vue.use(VueResource)
 
@@ -77,6 +78,16 @@ export default new Router({
           path: '/profile',
           name: 'Profile',
           component: Profile
+        },
+        {
+          path: '/unreply',
+          name: 'Unreply',
+          component: Unreply
+        },
+        {
+          path: '/reply',
+          name: 'Reply',
+          component: Reply
         }
       ]
     },

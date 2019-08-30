@@ -9,13 +9,16 @@ import ElementUI from 'element-ui'
 import infiniteScroll from 'vue-infinite-scroll'
 import 'element-ui/lib/theme-chalk/index.css'
 import '../theme/index.css'
-
+import Qs from 'qs'
+Vue.prototype.qs = Qs
 Vue.prototype.$axios = axios
 Vue.prototype.$ajax = axios
-axios.defaults.baseURL = '/api'
+axios.defaults.baseURL = ''
 axios.defaults.headers.common['token'] = 'f4c902c9ae5a2a9d8f84868ad064e706'
-axios.defaults.headers.post['Content-type'] = 'application/json;charset=UTF-8'
-axios.defaults.headers.get['Content-type'] = 'application/json;charset=UTF-8'
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
+// axios.defaults.headers.post['Content-type'] = 'application/json;charset=UTF-8'
+// axios.defaults.headers.get['Content-type'] = 'application/json;charset=UTF-8'
+axios.defaults.headers.get['Content-Type'] = 'application/x-www-form-urlencoded'
 Vue.config.productionTip = false
 Vue.use(VueResource)
 Vue.use(ElementUI)
