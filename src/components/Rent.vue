@@ -18,7 +18,7 @@
             infinite-scroll-disabled="disabled"
             style="list-style: none"
           >
-            <li v-for="room1 in this.rooms" :key="room1"
+            <li v-for="room1 in this.rooms" :key="room1.id"
                 style="list-style: none"
             >
               <Room v-if="room1.type==='单人间'" :room="room1" @click.native="room0(room1)"></Room>
@@ -106,7 +106,7 @@
             infinite-scroll-disabled="disabled"
             style="list-style: none"
           >
-            <li v-for="room1 in this.rooms" :key="room1"
+            <li v-for="room1 in this.rooms" :key="room1.id"
                 style="list-style: none"
             >
               <Room v-if="room1.type==='双人间'" :room="room1" @click.native="room2(room1)"></Room>
@@ -194,7 +194,7 @@
             infinite-scroll-disabled="disabled"
             style="list-style: none"
           >
-            <li v-for="room1 in this.rooms" :key="room1"
+            <li v-for="room1 in this.rooms" :key="room1.id"
                 style="list-style: none"
             >
               <Room v-if="room1.type==='四人间'" :room="room1" @click.native="room3(room1)"></Room>
@@ -325,7 +325,7 @@ export default {
   },
   computed: {
     noMore () {
-      return this.count > this.rooms.length + 4
+      if (this.rooms === null) { return true } else { return this.count > this.rooms.length + 4 }
     },
     disabled () {
       return this.loading || this.noMore

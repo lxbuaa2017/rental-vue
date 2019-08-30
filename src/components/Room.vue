@@ -4,8 +4,7 @@
       <el-col style="width:33%;margin-left:0">
         <el-image
           style="margin-left:0;width: 120px; height: 120px"
-          :src="url"
-          :preview-src-list="url">
+          :src="url">
         </el-image>
       </el-col>
       <el-col style="width:33%;vertical-align: center">
