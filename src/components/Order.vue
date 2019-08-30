@@ -11,17 +11,17 @@
           <div class="orderShow">
             <el-row>
               <el-card :body-style="{ padding: '0px' }" shadow="hover">
-                <img :src=list.room class="image">
+                <img :src=list.image class="image">
                 <div class="label">
                   <div style="padding: 5px">
-                    <el-link :underline="false" style="font-size: 16px">{{list.room.address}}（{{list.state}}）</el-link>
-                    <time class="time">{{list.createdTime}}</time>
+                    <el-link :underline="false" style="font-size: 16px">{{list.address}}（{{list.status}}）</el-link>
+                    <time class="time">{{list.createdtime}}</time>
                   </div>
-                  <div class="position">{{list.room.type}}&nbsp;{{list.room.rentType}}</div>
+                  <div class="position">{{list.roomtype}}&nbsp;{{list.renttype}}</div>
                   <div class="buttongroup">
-                    <el-button class="button" type="primary" v-on:click="view(list.id)">查看</el-button>
-                    <el-button class="button" type="warning" plain v-on:click="repair(list.id)">报修</el-button>
-                    <el-button class="button" type="success" plain v-on:click="charge(list.id)">续租</el-button>
+                    <el-button class="button" type="primary" v-on:click="view(list.orderid)">查看</el-button>
+                    <el-button class="button" type="warning" plain v-on:click="repair(list.orderid)">报修</el-button>
+                    <el-button class="button" type="success" plain v-on:click="charge(list.orderid)">续租</el-button>
                   </div>
                 </div>
               </el-card>
@@ -131,11 +131,29 @@ export default {
             break
           }
           // get order information here
+          let status = ''
+          switch (this.orders[this.count].object.state) {
+            case 1823:
+              status = '待审核'
+              break
+            case 1824:
+              status = '待支付'
+              break
+            case 1825:
+              status = '已支付'
+              break
+          }
           this.lists.push({
             'orderid': this.orders[this.count].object.id,
             'roomid': this.orders[this.count].object.room.roomId,
+            'image': this.orders[this.count].object.room.imageUrls[0],
+            'address': this.orders[this.count].object.room.address,
+            'status': status,
             'renttype': this.orders[this.count].type,
-            'roomtype': this.orders[this.count].object.room.type
+            'roomtype': this.orders[this.count].object.room.type,
+            'createdtime': this.orders[this.count].object.createdTime,
+            'checkinday': this.orders[this.count].object.checkInDay,
+            'leaveday': this.orders[this.count].object.leaveDay
           })
           this.count++
         }

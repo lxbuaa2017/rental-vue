@@ -38,16 +38,13 @@ export default {
   },
   mounted () {
     // get detail here
-    let id = this.$route.params.id
-    let data = {'id': id}
-    this.$axios.post('/api/room', data).then((res) => {
+    this.$axios.post('/api/room/findById', this.qs.stringify({id: this.$route.params.id})).then((res) => {
       if (res.data.address === '') {
         this.$route.push('/')
       } else {
         this.data.push({
           'type': res.data.type,
           'address': res.data.address
-
         })
       }
     })
