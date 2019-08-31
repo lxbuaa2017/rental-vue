@@ -1,25 +1,48 @@
 <template>
   <div class="order-wrap">
-    <h2 style="padding-left: 10px; text-align: left">历史记录</h2>
+    <h2 style="padding-left: 10px; text-align: left">已完成工单</h2>
     <div class="infinite-list-wrapper" style="overflow:auto">
       <ul
         class="list"
         v-infinite-scroll="load"
         infinite-scroll-disabled="disabled"
         style="list-style-type: none;padding-inline-start: 0px">
-        <li v-for="(list) in lists" v-bind:key="list.id">
-          <div class="orderShow">
+        <li v-for="workorder in workorders" v-bind:key="workorder.id">
+          <div class="orderComplain">
             <el-row>
-              <el-card :body-style="{ padding: '0px' }" shadow="hover">
-                <img :src=list.image class="image">
+              <el-card :body-style="{ padding: '50px' }" shadow="hover">
                 <div class="label">
                   <div style="padding: 5px">
-                    <el-link :underline="false" style="font-size: 16px">{{list.title}}</el-link>
-                    <time class="time">{{list.time}}</time>
-                  </div>
-                  <div class="position">{{list.address}}</div>
-                  <div class="buttongroup">
-                    <el-button class="button" type="primary" v-on:click="view(list.id)">查看</el-button>
+                    <el-row :gutter="12">
+                      <el-col :span="8">
+                        <time class="time">{{workorder.maintenanceName}}</time>
+                      </el-col>
+                      <el-col :span="8">
+                        <el-button type="info" @click="evaluate(workorder.id,1)"></el-button>
+                        <el-button type="info" @click="evaluate(workorder.id,2)"></el-button>
+                        <el-button type="info" @click="evaluate(workorder.id,3)"></el-button>
+                        <el-button type="info" @click="evaluate(workorder.id,4)"></el-button>
+                        <el-button type="info" @click="evaluate(workorder.id,5)"></el-button>
+                      </el-col>
+                      <el-col :span="8">
+                        <el-row>
+                          <el-col>
+                            <div>{{workorder.message}}</div>
+                          </el-col >
+                          <el-col v-if="workorder.urls!=null&&workorder.urls.length>0">
+                            <el-row :gutter="10" style="text-align: right;float:right" v-for="url in workorder.urls" v-bind:key="url">
+                              <el-col style="text-align: right;display: inline-block" :span="6">
+                                <el-image
+                                  style="width: 100px; height: 100px;text-align: right"
+                                  :src="url"
+                                  :preview-src-list="srcList">
+                                </el-image>
+                              </el-col>
+                            </el-row>
+                          </el-col>
+                        </el-row>
+                      </el-col>
+                    </el-row>
                   </div>
                 </div>
               </el-card>
@@ -33,105 +56,40 @@
   </div>
 </template>
 
-<style scoped>
-  .time {
-    font-size: 13px;
-    color: #999;
-    text-align: right;
-    float: right;
-  }
-
-  .position {
-    padding: 5px;
-    font-size: 13px;
-    color: #999;
-  }
-
-  .bottom {
-    margin-top: 13px;
-    line-height: 12px;
-  }
-
-  .buttongroup {
-    margin-top: 15px;
-  }
-
-  .el-button {
-    float: right;
-    margin: 10px;
-    width: auto;
-  }
-
-  .image {
-    height: 120px;
-    display: inline-block;
-    float: left;
-    width: 120px;
-    padding: 15px;
-  }
-
-  .label {
-    padding: 14px;
-    text-align: left;
-    margin-left: 150px;
-  }
-
-  .el-card {
-    height: 150px;
-    margin: 5px;
-  }
-
-</style>
-
 <script>
+import {getCookie} from '../assets/js/cookie.js'
 export default {
+  name: 'Reply',
   data () {
     return {
-      name: 'OrderView',
-      id: 1,
-      count: 0,
-      total: 0,
-      loading: false,
-      currentDate: new Date(),
-      lists: []
+      username: '',
+      workorders: [],
+      urls: [
+        'http://icon.nipic.com/BannerPic/20160426/photo/20160426160807.jpg',
+        'http://icon.nipic.com/BannerPic/20160426/photo/20160426160826.jpg'
+      ]
     }
   },
   mounted () {
-    // get total here
-    this.total = 37
-  },
-  computed: {
-    noMore () {
-      return this.count >= this.total
-    },
-    disabled () {
-      return this.loading || this.noMore
-    }
+    this.username = getCookie('username')
+    var self = this
+    this.$axios.post('/api/workorder/getfinish', this.qs.stringify({
+      'username': this.username
+    })).then((res) => {
+      self.workorders = res.data
+    })
   },
   methods: {
-    load () {
-      this.loading = true
-      setTimeout(() => {
-        for (let i = 0; i < 10; i++) {
-          if (this.count >= this.total) {
-            break
-          }
-          // get order information here
-          this.lists.push({
-            id: this.id,
-            image: 'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png',
-            title: '测试数据' + this.id++,
-            time: '2019年8月25日 10:51',
-            address: '北京市海淀区学院路37号'
-          })
-          this.count++
-        }
-        this.loading = false
-      }, 2000)
-    },
-    view (id) {
-      alert('Clicked \'view\' on room id ' + id)
+    evaluate (id, point) {
+      this.$axios.post('/api/workorder/evaluate', this.qs.stringify({
+        'username': id,
+        'score': point
+      }))
     }
   }
 }
 </script>
+
+<style scoped>
+
+</style>

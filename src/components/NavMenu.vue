@@ -21,8 +21,8 @@
             <span>维修工单</span>
           </template>
           <el-menu-item-group>
-            <el-menu-item index="3-1" >待处理工单</el-menu-item>
-            <el-menu-item index="3-2" >历史记录</el-menu-item>
+            <el-menu-item index="3-1" v-on:click="showTicket">待处理工单</el-menu-item>
+            <el-menu-item index="3-2" v-on:click="showTicketHistory">历史记录</el-menu-item>
           </el-menu-item-group>
         </el-submenu>
         <el-submenu index="4">
@@ -63,8 +63,11 @@ export default {
     showOrder () {
       this.$router.push('/order')
     },
-    showOrderHistory () {
-      this.$router.push('/orderhistory')
+    showTicket () {
+      this.$router.push('/ticket')
+    },
+    showTicketHistory () {
+      this.$router.push('/tickethistory')
     },
     showUnreply () {
       this.$router.push('/unreply')
