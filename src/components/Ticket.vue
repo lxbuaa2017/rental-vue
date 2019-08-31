@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-button type="info" @click="SdialogFormVisible=true">创建工单</el-button>
+    <el-button type="info" @click="SdialogFormVisible=true">报修</el-button>
     <el-dialog  title="创建新工单" :visible.sync="SdialogFormVisible">
       <el-form :model="form">
         <el-form-item label="姓名" :label-width="formLabelWidth">
@@ -9,7 +9,7 @@
         <el-form-item label="报修内容" :label-width="formLabelWidth">
           <el-input v-model="newWorkorder.message" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="报修地址" :label-width="formLabelWidth">
+        <el-form-item label="房间地址" :label-width="formLabelWidth">
           <el-input v-model="newWorkorder.address" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="上传图片" :label-width="formLabelWidth">
@@ -37,7 +37,7 @@
       </div>
     </el-dialog>
     <div class="order-wrap">
-      <h2 style="padding-left: 10px; text-align: left">未解决工单</h2>
+      <h2 style="padding-left: 10px; text-align: left">待处理工单</h2>
       <div class="infinite-list-wrapper" style="overflow:auto">
         <ul
           class="list"
