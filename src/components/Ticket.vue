@@ -35,12 +35,12 @@
         <el-button type="primary" @click="commitWorkorder()">确 定</el-button>
       </div>
     </el-dialog>
+    <div style="display: block;height: 80px">
+      <h2 style="padding-left: 10px; text-align: left;display: inline-block;float: left">未处理工单</h2>
+      <el-button type="danger" style="display: inline-block;float: right;margin-top: 20px;margin-right: 10px" @click="SdialogFormVisible=true">创建工单</el-button>
+    </div>
     <div class="order-wrap">
-      <div>
-        <h2 style="padding-left: 10px; text-align: left;display: inline-block;float: left">未处理工单</h2>
-        <el-button type="danger" style="display: inline-block;float: right;margin-top: 20px;margin-right: 10px" @click="SdialogFormVisible=true">创建工单</el-button>
-      </div>
-      <div class="infinite-list-wrapper" style="overflow:auto">
+      <div class="infinite-list-wrapper" style="overflow: auto;display: block">
         <ul
           class="list"
           v-infinite-scroll="load"
@@ -54,7 +54,7 @@
                     <div style="padding: 5px">
                       <el-row>
                         <el-col :span="6">
-                          <time class="time">{{workorder.createdTime}}</time>
+                          <time class="time">{{workorder.createdTime}}<br>{{workorder.address}}</time>
                         </el-col>
                         <el-col :span="18">
                           <el-row>
@@ -82,8 +82,6 @@
             </div>
           </li>
         </ul>
-        <p v-if="loading" style="color: #2c3e50">加载中...</p>
-        <p v-if="noMore" style="color: #2c3e50">没有更多了</p>
       </div>
     </div>
   </div>

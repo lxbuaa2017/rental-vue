@@ -67,7 +67,7 @@ export default {
       self.isMale = this.userobject.male.toString()
     })
     console.log(this.isMale)
-    console.log(this.userobject.male)
+    console.log(this.userobject.isMale)
   },
   methods: {
     update () {
@@ -106,9 +106,9 @@ export default {
         this.userobject.age = this.age
       }
       if (this.isMale === 'true') {
-        this.userobject.male = true
+        this.userobject.isMale = true
       } else {
-        this.userobject.male = false
+        this.userobject.isMale = false
       }
       console.log(this.userobject)
       this.$axios.post('/api/tenant/update', {'tenant': this.userobject}).then((res) => {
