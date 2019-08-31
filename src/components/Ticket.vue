@@ -1,4 +1,41 @@
 <template>
+  <div>
+    <el-button type="info" @click="SdialogFormVisible=true">报修</el-button>
+    <el-dialog  title="建立新工单" :visible.sync="SdialogFormVisible">
+      <el-form :model="form">
+        <el-form-item label="姓名" :label-width="formLabelWidth">
+          <el-input v-model="username" autocomplete="off" :disabled="true"></el-input>
+        </el-form-item>
+        <el-form-item label="房间地址" :label-width="formLabelWidth">
+          <el-input v-model="newWorkOrder.location" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="报修说明" :label-width="formLabelWidth">
+          <el-input v-model="newWorkOrder.message" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="上传图片" :label-width="formLabelWidth">
+          <br>
+          <!--        action="https://localhost:8081/file/uploadImages"-->
+          <el-upload
+            style="text-align: left"
+            list-type="picture-card"
+            :http-request="uploadImgs"
+            action="/api/file/uploadImage"
+            :file="file"
+            :file-list="fileList"
+            :on-preview="handlePictureCardPreview"
+            :on-remove="handleRemove">
+            <i class="el-icon-plus"></i>
+          </el-upload>
+          <el-dialog :visible.sync="dialogVisible">
+            <img width="100%" :src="dialogImageUrl" alt="">
+          </el-dialog>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="SdialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="commitWorkOrder()">确 定</el-button>
+      </div>
+    </el-dialog>
   <div class="ticket-wrap">
     <h2 style="padding-left: 10px; text-align: left">待处理工单</h2>
     <div class="infinite-list-wrapper" style="overflow:auto">
@@ -31,6 +68,7 @@
       <p v-if="loading" style="color: #2c3e50">加载中...</p>
       <p v-if="noMore" style="color: #2c3e50">没有更多了</p>
     </div>
+  </div>
   </div>
 </template>
 
@@ -85,6 +123,7 @@
 </style>
 
 <script>
+import {getCookie} from '../assets/js/cookie.js'
 export default {
   data () {
     return {
@@ -93,13 +132,30 @@ export default {
       count: 0,
       total: 0,
       loading: false,
+      dialogVisible: false,
+      SdialogFormVisible: false,
       currentDate: new Date(),
-      lists: []
+      lists: [],
+      workOrder: [],
+      newWorkOrder: {
+        'message': '',
+        'tenantUsername': '',
+        'location': '',
+        'urls': []
+      }
     }
   },
   mounted () {
     // get total here
     this.total = 37
+    this.username = getCookie('username')
+    var self = this
+    this.$axios.post('/api/workorder/getbyTenant', this.qs.stringify({
+      'username': this.username
+    })).then((res) => {
+      self.workOrder = res.data
+      // self.urls = self.complains.urls
+    })
   },
   computed: {
     noMore () {
@@ -110,6 +166,21 @@ export default {
     }
   },
   methods: {
+    uploadImgs (file) {
+      let param = new FormData()
+      param.append('file', file.file)
+      this.$axios({
+        method: 'post',
+        url: '/api/file/uploadImage',
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        },
+        data: param,
+        withCredentials: true
+      }).then(res => {
+        this.newComplain.urls.push(res.data)
+      })
+    },
     load () {
       this.loading = true
       setTimeout(() => {
@@ -135,6 +206,18 @@ export default {
     },
     append (id) {
       alert('Clicked \'append\' on room id ' + id)
+    },
+    commitWorkOrder () {
+      this.newWorkOrder.tenantUsername = this.username
+      this.$axios.post('/api/workorder/add', this.newWorkOrder)
+      this.SdialogFormVisible = false
+    },
+    handleRemove (file, fileList) {
+      console.log(file, fileList)
+    },
+    handlePictureCardPreview (file) {
+      this.dialogImageUrl = file.url
+      this.dialogVisible = true
     }
   }
 }

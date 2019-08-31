@@ -77,6 +77,12 @@ export default {
     },
     showReply () {
       this.$router.push('/reply')
+    },
+    showTicket () {
+      this.$router.push('/ticket')
+    },
+    showTicketHistory () {
+      this.$router.push('/tickethistory')
     }
   }
 }

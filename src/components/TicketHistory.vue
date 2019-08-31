@@ -84,6 +84,7 @@
 </style>
 
 <script>
+import {getCookie} from '../assets/js/cookie.js'
 export default {
   data () {
     return {
@@ -97,8 +98,14 @@ export default {
     }
   },
   mounted () {
-    // get total here
     this.total = 37
+    this.username = getCookie('username')
+    var self = this
+    this.$axios.post('/api/complaints/getRepliedComplaints', this.qs.stringify({
+      'username': this.username
+    })).then((res) => {
+      self.complaints = res.data
+    })
   },
   computed: {
     noMore () {
