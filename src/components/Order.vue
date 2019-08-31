@@ -177,19 +177,28 @@ export default {
       this.viewDialogVisible = true
     },
     charge (order) {
-      if (order.orderobject.state === 1825) {
-        var newPage = window.open()
-        window.open('about:blank')
-        newPage.location.href = ('/api/file/pdfContract?orderid=' + order.orderobject.id)
-      } else {
-        this.payOrder = order
-        this.payDialogVisible = true
+      switch (order.orderobject.state) {
+        case 1824:
+          this.payOrder = order
+          this.payDialogVisible = true
+          break
+        case 1825:
+          var newPage = window.open('about:blank')
+          newPage.location.href = ('/api/file/pdfContract?orderid=' + order.orderobject.id)
+          break
+        case 1826:
+          if (order.type === '长租') {
+            // do sth
+          } else {
+            // do sth else
+          }
       }
     },
     pay () {
-      this.$axios.post('/api/setLongRentState', {'longRentOrder': this.payOrder.orderobject, 'state': 1825})
+      this.$axios.post('/api/setShortRentState', {'shortRentOrder': this.payOrder.orderobject, 'state': 1825})
       alert('付款成功。')
       this.payDialogVisible = false
+      window.location.reload()
     }
   }
 }
