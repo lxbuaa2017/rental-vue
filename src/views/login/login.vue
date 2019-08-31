@@ -1,6 +1,6 @@
 <template>
   <div id="main">
-    <img src="../../assets/logo.png" style="width: 200px">
+    <img src="../../assets/img/logo.png" style="width: 200px">
     <div class="login-wrap" v-show="showLogin">
       <h3>登录</h3>
       <p v-show="showTishi">{{tishi}}</p>

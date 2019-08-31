@@ -1,6 +1,5 @@
 <template>
   <div>
-    <el-button type="info" @click="SdialogFormVisible=true">创建工单</el-button>
     <el-dialog  title="创建新工单" :visible.sync="SdialogFormVisible">
       <el-form :model="form">
         <el-form-item label="姓名" :label-width="formLabelWidth">
@@ -37,7 +36,10 @@
       </div>
     </el-dialog>
     <div class="order-wrap">
-      <h2 style="padding-left: 10px; text-align: left">未处理工单</h2>
+      <div>
+        <h2 style="padding-left: 10px; text-align: left;display: inline-block;float: left">未处理工单</h2>
+        <el-button type="danger" style="display: inline-block;float: right;margin-top: 20px;margin-right: 10px" @click="SdialogFormVisible=true">创建工单</el-button>
+      </div>
       <div class="infinite-list-wrapper" style="overflow:auto">
         <ul
           class="list"
