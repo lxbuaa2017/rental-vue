@@ -23,7 +23,7 @@
                             <div>{{workorder.message}}</div>
                           </el-col >
                           <el-col>
-                            <el-rate v-model="value" @change="evaluate"></el-rate>
+                            <el-rate v-model="workorder.score" @change="evaluate(workorder)"></el-rate>
                           </el-col>
                           <el-col v-if="workorder.urls!=null&&workorder.urls.length>0">
                             <el-row :gutter="10" style="text-align: right;float:right" v-for="url in workorder.urls" v-bind:key="url">
@@ -66,8 +66,7 @@ export default {
         'address': '',
         'tenantUsername': '',
         'urls': []
-      },
-      value: null
+      }
     }
   },
   mounted () {
@@ -77,12 +76,14 @@ export default {
       'username': this.username
     })).then((res) => {
       self.workorders = res.data
+      console.log(res.data)
     })
   },
   methods: {
-    evaluate () {
-      console.log(this.value)
-      this.$axios.post('/api/workorder/evaluate?username=' + this.username + '&score=' + this.value)
+    evaluate (workorder) {
+      console.log(workorder.score)
+      this.$axios.post('/api/workorder/evaluate?username=' + this.username + '&score=' + workorder.score)
+      this.$axios.post('/api/workorder/update', workorder)
     }
   }
 }
