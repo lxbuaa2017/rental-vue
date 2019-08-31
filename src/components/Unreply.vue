@@ -1,6 +1,5 @@
 <template>
 <div>
-  <el-button type="info" @click="SdialogFormVisible=true">创建投诉</el-button>
   <el-dialog  title="发起新投诉" :visible.sync="SdialogFormVisible">
     <el-form :model="form">
       <el-form-item label="姓名" :label-width="formLabelWidth">
@@ -34,7 +33,10 @@
     </div>
   </el-dialog>
   <div class="order-wrap">
-    <h2 style="padding-left: 10px; text-align: left">未回复投诉</h2>
+    <div style="display: block;height: 80px">
+      <h2 style="padding-left: 10px; text-align: left;display: inline-block;float: left">未回复投诉</h2>
+      <el-button type="danger" style="display: inline-block;float: right;margin-top: 20px;margin-right: 10px" @click="SdialogFormVisible=true">创建投诉</el-button>
+    </div>
     <div class="infinite-list-wrapper" style="overflow:auto">
       <ul
         class="list"
