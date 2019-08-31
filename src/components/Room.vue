@@ -8,7 +8,7 @@
         </el-image>
       </el-col>
       <el-col style="width:33%;vertical-align: center">
-        {{address}}
+        <el-link :underline="false" style="font-size: 16px" :href="detailurl" target="_blank">{{address}}</el-link>
       </el-col>
       <el-col style="width:33%;vertical-align: center">
         短租{{this.sr_price}}元/天
@@ -28,7 +28,8 @@ export default {
       url: this.room.imageUrls[0],
       address: this.room.address,
       sr_price: this.room.priceForDay,
-      lr_price: this.room.priceForMonth
+      lr_price: this.room.priceForMonth,
+      detailurl: '/detail/' + this.room.roomId
     }
   }
 }
