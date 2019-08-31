@@ -46,7 +46,7 @@ export default {
     this.$axios.get('/api/room/findById?id=' + this.$route.params.id).then((res) => {
       console.log(res)
       if (res.data === '') {
-        self.$route.push('/')
+        self.$router.push('/')
       } else {
         let state = ''
         switch (res.data.state) {

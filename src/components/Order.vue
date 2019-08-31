@@ -49,6 +49,30 @@
       </div>
       <div style="height: 30px"/>
     </el-dialog>
+    <el-dialog title="续租" :visible.sync="shortExtDialogVisible" width="30%">
+      <div>
+        <p style="display: inline-block">请选择续租天数：</p>
+        <el-input type="number" min="1" max="240" style="width: 40%;display: inline-block" v-model="shortExtDays"></el-input>
+      </div>
+      <p>请扫二维码付款</p>
+      <img style="width: 150px;height: 150px" src="../assets/img/qrcode.png">
+      <div style="text-align: right;padding: 10px">
+        <el-button @click="extendShort" type="primary">付款完成</el-button>
+        <el-button @click="shortExtDialogVisible = false">取消</el-button>
+      </div>
+      <div style="height: 30px"/>
+    </el-dialog>
+    <el-dialog title="续租" :visible.sync="longExtDialogVisible" width="30%">
+      <div>
+        <p style="display: inline-block">请选择续租月数：</p>
+        <el-input type="number" min="1" max="240" style="width: 40%;display: inline-block" v-model="longExtMonths"></el-input>
+      </div>
+      <div style="text-align: right;padding: 10px">
+        <el-button @click="extentLong" type="primary">确认续租</el-button>
+        <el-button @click="longExtDialogVisible = false">取消</el-button>
+      </div>
+      <div style="height: 30px"/>
+    </el-dialog>
   </div>
 </template>
 
@@ -73,7 +97,11 @@ export default {
       viewCreatedTime: '',
       viewOrderId: '',
       payDialogVisible: false,
-      payOrder: ''
+      payOrder: '',
+      shortExtDialogVisible: false,
+      shortExtDays: 0,
+      longExtDialogVisible: false,
+      longExtMonths: 0
     }
   },
   mounted () {
@@ -137,9 +165,15 @@ export default {
               chargebuttondisabled = false
               break
             case 1827:
-              status = '续租待确认'
-              chargebutton = '续租'
-              chargebuttondisabled = true
+              if (this.orders[this.count].type === '长租') {
+                status = '续租合同待确认'
+                chargebutton = '查看合同'
+                chargebuttondisabled = false
+              } else {
+                status = '续租待确认'
+                chargebutton = '续租'
+                chargebuttondisabled = true
+              }
               break
           }
           let detailpage = '/detail/' + this.orders[this.count].object.room.roomId
@@ -183,21 +217,39 @@ export default {
           this.payDialogVisible = true
           break
         case 1825:
+        case 1827:
           var newPage = window.open('about:blank')
           newPage.location.href = ('/api/file/pdfContract?orderid=' + order.orderobject.id)
           break
         case 1826:
-          if (order.type === '长租') {
-            // do sth
+          if (order.renttype === '长租') {
+            this.payOrder = order
+            this.longExtDialogVisible = true
           } else {
-            // do sth else
+            this.payOrder = order
+            this.shortExtDialogVisible = true
           }
+          break
       }
     },
     pay () {
       this.$axios.post('/api/setShortRentState', {'shortRentOrder': this.payOrder.orderobject, 'state': 1825})
       alert('付款成功。')
       this.payDialogVisible = false
+      window.location.reload()
+    },
+    extendShort () {
+      this.payOrder.orderobject.days = this.shortExtDays
+      this.$axios.post('/api/applyShortRentRelet', {'shortRentOrder': this.payOrder.orderobject})
+      alert('续租成功。请等待审核。')
+      this.shortExtDialogVisible = false
+      window.location.reload()
+    },
+    extentLong () {
+      this.payOrder.orderobject.months = this.longExtMonths
+      this.$axios.post('/api/applyLongRentRelet', {'longRentOrder': this.payOrder.orderobject})
+      alert('续租成功。请等待审核。')
+      this.longExtDialogVisible = false
       window.location.reload()
     }
   }
