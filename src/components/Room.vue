@@ -8,7 +8,7 @@
         </el-image>
       </el-col>
       <el-col style="width:33%;vertical-align: center">
-        <el-link :underline="false" style="font-size: 16px" @click="detailShow">{{address}}</el-link>
+        <el-link :underline="false" style="font-size: 16px" @click.stop="detailShow">{{address}}</el-link>
       </el-col>
       <el-col style="width:33%;vertical-align: center">
         短租{{this.sr_price}}元/天
