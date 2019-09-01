@@ -320,7 +320,10 @@ export default {
         resource: '',
         desc: ''
       },
-      formLabelWidth: '120px'
+      formLabelWidth: '120px',
+      detailDialogVisible: false,
+      data: {},
+      image: []
     }
   },
   computed: {

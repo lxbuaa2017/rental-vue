@@ -1,11 +1,4 @@
 <template>
-  <el-container>
-    <el-header style="padding: 0px">
-      <p
-        style="margin: 0px; padding-top: 18px;padding-left: 20px;padding-right: 20px;text-align: left;font-size: 21px;font-weight: 700">
-        房屋详情</p>
-    </el-header>
-    <el-main>
       <div style="margin: 20px;height: inherit">
         <div style="display: inline-block;width: fit-content">
           <el-carousel trigger="click" height="450px" indicator-position="none" :autoplay="false" :loop="false"
@@ -27,8 +20,6 @@
           <p>联系方式：{{this.data.phone}}</p>
         </div>
       </div>
-    </el-main>
-  </el-container>
 </template>
 
 <script>
@@ -45,46 +36,42 @@ export default {
     let self = this
     this.$axios.get('/api/room/findById?id=' + this.$route.params.id).then((res) => {
       console.log(res)
-      if (res.data === '') {
-        self.$router.push('/')
-      } else {
-        let state = ''
-        switch (res.data.state) {
-          case 2001:
-            state = '已租'
-            break
-          case 2002:
-            state = '未租'
-            break
-        }
-        let renttype = ''
-        let price = ''
-        switch (res.data.rentType) {
-          case 2004:
-            renttype = '长租'
-            price = res.data.priceForMonth.toString() + '/月'
-            break
-          case 2005:
-            renttype = '短租'
-            price = res.data.priceForDay.toString() + '/天'
-            break
-          case 2006:
-            renttype = '长租 / 短租'
-            price = '长租 ' + res.data.priceForMonth.toString() + '/月，短租 ' + res.data.priceForDay.toString() + '/天'
-            break
-        }
-        self.data = {
-          'address': res.data.address,
-          'state': state,
-          'type': res.data.type,
-          'renttype': renttype,
-          'area': res.data.area,
-          'price': price,
-          'landlord': res.data.landLord.username,
-          'phone': res.data.landLord.phone
-        }
-        self.image = res.data.imageUrls
+      let state = ''
+      switch (res.data.state) {
+        case 2001:
+          state = '已租'
+          break
+        case 2002:
+          state = '未租'
+          break
       }
+      let renttype = ''
+      let price = ''
+      switch (res.data.rentType) {
+        case 2004:
+          renttype = '长租'
+          price = res.data.priceForMonth.toString() + '/月'
+          break
+        case 2005:
+          renttype = '短租'
+          price = res.data.priceForDay.toString() + '/天'
+          break
+        case 2006:
+          renttype = '长租 / 短租'
+          price = '长租 ' + res.data.priceForMonth.toString() + '/月，短租 ' + res.data.priceForDay.toString() + '/天'
+          break
+      }
+      self.data = {
+        'address': res.data.address,
+        'state': state,
+        'type': res.data.type,
+        'renttype': renttype,
+        'area': res.data.area,
+        'price': price,
+        'landlord': res.data.landLord.username,
+        'phone': res.data.landLord.phone
+      }
+      self.image = res.data.imageUrls
     })
   }
 }
